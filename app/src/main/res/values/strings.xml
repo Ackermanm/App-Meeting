@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">VoteApp</string>
+    <string name="location_title">location</string>
+    <string-array name="locations">
+
+        <item>location</item>
+        <item>Student center</item>
+        <item>Phone</item>
+        <item>Zoom</item>
+    </string-array>
 </resources>
