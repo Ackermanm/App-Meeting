@@ -15,15 +15,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textTest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="168dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="184dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
+    <LinearLayout
+        android:id="@+id/linearChosenDate"
+        android:layout_width="226dp"
+        android:layout_height="294dp"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarTime" />
+        app:layout_constraintTop_toBottomOf="@+id/calendarTime">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearChosenDateDelete"
+        android:layout_width="99dp"
+        android:layout_height="295dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toEndOf="@+id/linearChosenDate"
+        app:layout_constraintTop_toTopOf="@+id/linearChosenDate"></LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
