@@ -56,6 +56,10 @@ public class SetUpActivity extends AppCompatActivity {
         spinner.setAdapter(locationAdapter);
     }
 
+    /**
+     *  Click done button, deliver details of meeting to finish page(Done activiy).
+     * @param v Done Button
+     */
     public void DoneClicked(View v){
         Intent intent = new Intent(this,DoneActivity.class);
         String title = titleText.getText().toString();
@@ -70,25 +74,36 @@ public class SetUpActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    // Click cancel button, close this new adding.
+    /**
+     * Click cancel button, close this new adding.
+     * @param v Button cancel.
+     */
     public void CancelClicked(View v){
 
         finish();
     }
 
-    // Click time button, go to calendar widget(Time activity).
+    /**
+     *  Click time button, go to calendar(time activity).
+     * @param v Button Time
+     */
     public void TimeClicked(View v){
         Intent intent = new Intent(this,TimeActivity.class);
         startActivityForResult(intent,1);
     }
 
-    // Get selected date.
+    /**
+     * Get selected dates and show them in TextView.
+     * @param requestCode Label the method that will go to get the result.
+     * @param resultCode Check which result we get.
+     * @param data The intent that wants to get extra.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1){
             if (resultCode == RESULT_OK){
-                String[] times = data.getStringArrayExtra("time");
+                String[] times = data.getStringArrayExtra("time"); // times: selected dates.
                 String all = "";
                 for (int i = 0; i < times.length; i++){
                     all += times[i];
