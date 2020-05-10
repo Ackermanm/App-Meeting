@@ -18,7 +18,7 @@ public class SetUpActivity extends AppCompatActivity {
 
     EditText titleText;
     Spinner spinner;
-    EditText returnTimeText;
+    TextView returnTimeText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +26,10 @@ public class SetUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_set_up);
 
         titleText = findViewById(R.id.editTextTitle);
-        returnTimeText = findViewById(R.id.editTextTime);
+        returnTimeText = findViewById(R.id.textTimeResult); // Show selected date from calendar(Time Activity).
 // Location drop down list
-         spinner = findViewById(R.id.spinnerLocation);
-//  Adapter, connected from JAVA to UI
+         spinner = findViewById(R.id.spinnerLocation); // Locations are put in a spinner widget.
+//  Adapter, connected from JAVA to UI. This adapter is used to connect Location spinner and items(XML).
         ArrayAdapter<String> locationAdapter =new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.locations)){
 /*            @Override
@@ -70,21 +70,33 @@ public class SetUpActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    // Click cancel button, close this new adding.
     public void CancelClicked(View v){
+
         finish();
     }
 
+    // Click time button, go to calendar widget(Time activity).
     public void TimeClicked(View v){
         Intent intent = new Intent(this,TimeActivity.class);
         startActivityForResult(intent,1);
     }
 
+    // Get selected date.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1){
             if (resultCode == RESULT_OK){
-                returnTimeText.setText(data.getStringExtra("time"));
+                String[] times = data.getStringArrayExtra("time");
+                String all = "";
+                for (int i = 0; i < times.length; i++){
+                    all += times[i];
+                    if (i != times.length-1){
+                        all += "/";
+                    }
+                }
+                returnTimeText.setText(all);
             }
         }
     }

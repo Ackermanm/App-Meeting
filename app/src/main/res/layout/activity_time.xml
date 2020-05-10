@@ -8,17 +8,19 @@
 
     <CalendarView
         android:id="@+id/calendarTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="87dp"
+        android:layout_width="370dp"
+        android:layout_height="301dp"
+        android:layout_marginTop="28dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearChosenDate"
-        android:layout_width="226dp"
-        android:layout_height="294dp"
+        android:layout_width="222dp"
+        android:layout_height="210dp"
+        android:layout_marginStart="48dp"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calendarTime">
@@ -27,10 +29,34 @@
 
     <LinearLayout
         android:id="@+id/linearChosenDateDelete"
-        android:layout_width="99dp"
-        android:layout_height="295dp"
+        android:layout_width="104dp"
+        android:layout_height="210dp"
+        android:layout_marginBottom="1dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/linearChosenDate"
         app:layout_constraintStart_toEndOf="@+id/linearChosenDate"
         app:layout_constraintTop_toTopOf="@+id/linearChosenDate"></LinearLayout>
+
+    <Button
+        android:id="@+id/buttonCancelTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="15dp"
+        android:onClick="CancelTimeClicked"
+        android:text="Cancel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearChosenDate" />
+
+    <Button
+        android:id="@+id/buttonDoneTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="40dp"
+        android:onClick="DoneTimeClicked"
+        android:text="Done"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearChosenDateDelete" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

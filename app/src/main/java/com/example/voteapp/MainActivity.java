@@ -17,6 +17,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Click add button, Go to Setup activity.
+     * @param v Button Add
+     */
     public void AddMeetingClicked(View v){
         Intent intent = new Intent(this,SetUpActivity.class);
         startActivity(intent);
