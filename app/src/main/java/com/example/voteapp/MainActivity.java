@@ -14,7 +14,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -81,12 +85,10 @@ public class MainActivity extends AppCompatActivity {
             title.setText(m.title);
             location.setText(m.location);
             String allTime = "";
-            for (int i = 0; i < m.times.size(); i++){
-                allTime += m.times.get(i);
-                if (i != m.times.size()-1){
-                    allTime += "/";
-                }
+            for (String key: m.times.keySet()){
+                allTime += (key + "/");
             }
+            allTime = allTime.substring(0,allTime.length()-1);
             time.setText(allTime);
             ll.addView(title);
             ll.addView(location);
@@ -96,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
             ll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(MainActivity.this,DoneActivity.class);
+                    Intent intent = new Intent(MainActivity.this,DetailActivity.class);
                     startActivity(intent);
                 }
             });
