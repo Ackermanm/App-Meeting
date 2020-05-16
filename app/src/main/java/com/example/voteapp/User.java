@@ -4,11 +4,14 @@ import java.util.List;
 
 public class User {
     String email;
-    Meeting meetings;
+    List<Meeting> meetings;
 
-    public User(String email, Meeting meetings) {
+    public User(String email, List<Meeting> meetings) {
         this.email = email;
         this.meetings = meetings;
+    }
+    // Empty constructor is used for generate instance from database.
+    public User(){
     }
 
     public String getEmail() {
@@ -19,11 +22,11 @@ public class User {
         this.email = email;
     }
 
-    public Meeting getMeetings() {
+    public List<Meeting> getMeetings() {
         return meetings;
     }
 
-    public void setMeetings(Meeting meetings) {
+    public void setMeetings(List<Meeting> meetings) {
         this.meetings = meetings;
     }
 }

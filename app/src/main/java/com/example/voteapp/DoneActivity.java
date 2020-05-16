@@ -16,8 +16,7 @@ public class DoneActivity extends AppCompatActivity {
 
         textView = findViewById(R.id.textDetail);
         Intent intent = getIntent();
-        String[] details = intent.getStringArrayExtra("detail");
-        textView.setText(details[0]+","+details[1]);
+        String userUid = intent.getStringExtra("User Uid");
     }
 
 

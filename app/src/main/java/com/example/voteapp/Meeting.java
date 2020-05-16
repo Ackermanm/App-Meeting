@@ -12,6 +12,9 @@ public class Meeting {
         this.location = location;
         this.times = times;
     }
+    // Empty constructor is used for generate instance from database.
+    public Meeting(){
+    }
 
     public String getTitle() {
         return title;

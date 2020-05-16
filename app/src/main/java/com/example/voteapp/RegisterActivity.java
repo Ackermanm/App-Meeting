@@ -19,12 +19,18 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseAuth mAuth;
     EditText usernameedit;
     EditText userpasswordedit;
+    String userUid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,16 +81,30 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-
                     // when the log in process are completed linked to yafeis profile need to add code
                     Toast.makeText(getApplicationContext(), "Successfully, Registered", Toast.LENGTH_SHORT).show();
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    userUid = user.getUid();
+                    CreateNewUser();
 
+                }else {
+                    Toast.makeText(getApplicationContext(), "Register failed", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
-
     }
+
+    /**
+     * Create a new user when sign up successfully, and upload this new user to database.
+     */
+    public void CreateNewUser(){
+        List<Meeting> meetings = new ArrayList<>();
+        User user = new User(usernameedit.getText().toString(),meetings);
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = firebaseDatabase.getReference(userUid);
+        myRef.setValue(user);
+    }
+
     private void Login() { //method when press login button
         String username = usernameedit.getText().toString();
         String password = userpasswordedit.getText().toString();
@@ -109,6 +129,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                 if (task.isSuccessful()) {//check the result with the server if successfully login do this
                     Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    intent.putExtra("User Uid",user.getUid());
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//when press back button
                     startActivity(intent);
                 } else {
@@ -123,8 +145,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.ButtonRegister:
                 register();
+                break;
             case R.id.ButtonLogin:
-                System.out.println("yes");
+//                System.out.println("yes");
                 Login();
                /* startActivity(new Intent(this, MainActivity.class));*/
                 break;

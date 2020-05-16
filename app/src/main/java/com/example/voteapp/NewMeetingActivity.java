@@ -9,13 +9,26 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class NewMeetingActivity extends AppCompatActivity {
 
     EditText titleText;
     Spinner spinner;
     TextView returnTimeText;
-
+    User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,51 +36,12 @@ public class NewMeetingActivity extends AppCompatActivity {
 
         titleText = findViewById(R.id.editTextTitle);
         returnTimeText = findViewById(R.id.textTimeResult); // Show selected date from calendar(Time Activity).
-// Location drop down list
+        // Location drop down list
          spinner = findViewById(R.id.spinnerLocation); // Locations are put in a spinner widget.
-//  Adapter, connected from JAVA to UI. This adapter is used to connect Location spinner and items(XML).
+        //  Adapter, connected from JAVA to UI. This adapter is used to connect Location spinner and items(XML).
         ArrayAdapter<String> locationAdapter =new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.locations)){
-/*            @Override
-            public boolean isEnabled(int position) {
-                if (position == 0){
-                    return false;
-                }else{
-                    return true;
-                }
-            }*/
-// Set the 1st drop down list as hint, do nothing.
-            /*@Override
-            public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                View view = super.getDropDownView(position,convertView,parent);
-                TextView textView = (TextView)view;
-                if (position == 0){
-                    textView.setText(R.string.location_title);
-                }else{
-                    textView.setTextColor(Color.BLACK);
-                }
-                return view;
-            }*/
-        };
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.locations));
         spinner.setAdapter(locationAdapter);
-    }
-
-    /**
-     *  Click done button, deliver details of meeting to finish page(Done activiy).
-     * @param v Done Button
-     */
-    public void DoneClicked(View v){
-        Intent intent = new Intent(this,DoneActivity.class);
-        String title = titleText.getText().toString();
-        String location = spinner.getSelectedItem().toString();
-        if (location.equals("location")){
-            location = "";
-        }
-        String[] details = new  String[2];
-        details[0] = title;
-        details[1] = location;
-        intent.putExtra("detail",details);
-        startActivity(intent);
     }
 
     /**
@@ -100,15 +74,66 @@ public class NewMeetingActivity extends AppCompatActivity {
         if (requestCode == 1){
             if (resultCode == RESULT_OK){
                 String[] times = data.getStringArrayExtra("time"); // times: selected dates.
-                String all = "";
+                String allTime = "";
                 for (int i = 0; i < times.length; i++){
-                    all += times[i];
+                    allTime += times[i];
                     if (i != times.length-1){
-                        all += "/";
+                        allTime += "/";
                     }
                 }
-                returnTimeText.setText(all);
+                returnTimeText.setText(allTime);
             }
         }
+    }
+
+    /**
+     *  Click done button, deliver details of meeting to finish page(Done activiy).
+     * @param v Done Button
+     */
+    public void DoneClicked(View v){
+        // Go to Done Activity
+        final Intent intent = new Intent(this,DoneActivity.class);
+        // Create a new meeting according to info we get from edit texts.
+        String title = titleText.getText().toString();
+        String location = spinner.getSelectedItem().toString();
+        if (location.equals("location")){
+            location = "";
+        }
+        String time = returnTimeText.getText().toString();
+        String[] times = time.split("/");
+        List<String> timess = new ArrayList<>(Arrays.asList(times));
+        // Variables must be declared as final can be used in on Data Change method.
+        final Meeting meeting = new Meeting(title,location,timess);
+        Intent thisIntent = getIntent();
+        // Get User Uid from Main activity.
+        final String userUid = thisIntent.getStringExtra("User Uid");
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        //Get current user's reference in database.
+        final DatabaseReference myRef = database.getReference(userUid);
+        // Add a new meeting to this user's database.
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                user = dataSnapshot.getValue(User.class);
+                if (user.meetings == null){
+                    user.meetings = new ArrayList<Meeting>();
+                }
+                user.meetings.add(meeting);
+                myRef.setValue(user);
+                intent.putExtra("User Uid",userUid);
+                startActivity(intent);
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Toast.makeText(NewMeetingActivity.this,"Failed to update UI",Toast.LENGTH_SHORT).show();
+            }});
+        //Method 1, all these methods must be written in on Data Change method.
+        /*int index = user.meetings.size();
+        Map<String,Object> values = new HashMap<>();
+        values.put("/" + userUid + "/" + "/meetings/" + index, meeting);
+        myRef.updateChildren(values);
+        startActivity(intent);*/
+        // Method 2
     }
 }
