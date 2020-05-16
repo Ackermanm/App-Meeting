@@ -3,10 +3,15 @@ package com.example.voteapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -15,70 +20,115 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseAuth mAuth;
-    EditText emailText;
-    EditText passwordText;
+    EditText usernameedit;
+    EditText userpasswordedit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
+        findViewById(R.id.ButtonRegister).setOnClickListener(this);//catch click
+        findViewById(R.id.ButtonLogin).setOnClickListener(this);
+        usernameedit = (EditText) findViewById(R.id.username);
+        userpasswordedit = (EditText) findViewById(R.id.password);
         mAuth = FirebaseAuth.getInstance();
-        emailText = findViewById(R.id.editEmail);
-        passwordText = findViewById(R.id.editPassword);
+
     }
 
-    public void SignInClicked(View v){
-        final String email = emailText.getText().toString();
-        String password = passwordText.getText().toString();
-        /**
-         * The following method is Adapted from firebase website.
-         * - Web: https://firebase.google.com/docs/auth/android/password-auth
-         */
-        mAuth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Toast.makeText(RegisterActivity.this, "Login success!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        intent.putExtra("User Uid",user.getUid());
-                        startActivity(intent);
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Toast.makeText(RegisterActivity.this, "Login failed.", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+//Animation to make the app more interesting still being developed
+    public void Mstar2(View view) {
+        ImageView Star = (ImageView) findViewById(R.id.Mstar1);
+        ObjectAnimator animator = ObjectAnimator.ofFloat(Star, "translationX", 900f);
+        animator.setDuration(100);
+        animator.reverse();
+       animator.setRepeatCount(Animation.INFINITE);
+        animator.start();
     }
 
-    public void SignUpClicked(View v){
-        final String email = emailText.getText().toString();
-        String password = passwordText.getText().toString();
-        /**
-         * The following method is Adapted from firebase website.
-         * - Web: https://firebase.google.com/docs/auth/android/password-auth
-         */
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+    }
+
+    public void register() {
+        String username = usernameedit.getText().toString().trim();
+        String password = userpasswordedit.getText().toString().trim();
+        if (username.equals("")) {
+            usernameedit.setError("Please Enter Email");
+            return;
+        }
+        if (password.equals("")) {
+            userpasswordedit.setError("Please Enter password");
+            return;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(username).matches()) {
+            usernameedit.setError("Please enter a vaid email");
+            usernameedit.requestFocus();
+            return;
+        }
+        mAuth.createUserWithEmailAndPassword(username, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Toast.makeText(RegisterActivity.this, "Sign up success!.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                    FirebaseUser user = mAuth.getCurrentUser();
-                    intent.putExtra("User Uid",user.getUid());
-                    startActivity(intent);
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Toast.makeText(RegisterActivity.this, "Sign up failed.", Toast.LENGTH_SHORT).show();
+
+                    // when the log in process are completed linked to yafeis profile need to add code
+                    Toast.makeText(getApplicationContext(), "Successfully, Registered", Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
+
+
+    }
+    private void Login() { //method when press login button
+        String username = usernameedit.getText().toString();
+        String password = userpasswordedit.getText().toString();
+
+        if (username.equals("")) {
+            usernameedit.setError("Please Enter Email");
+            return;
+        }
+        if (password.equals("")) {
+            userpasswordedit.setError("Please Enter password");
+            return;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(username).matches()) {
+            usernameedit.setError("Please enter a vaid email");
+            usernameedit.requestFocus();
+            return;
+        }
+        mAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+
+                if (task.isSuccessful()) {//check the result with the server if successfully login do this
+                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//when press back button
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ButtonRegister:
+                register();
+            case R.id.ButtonLogin:
+                System.out.println("yes");
+                Login();
+               /* startActivity(new Intent(this, MainActivity.class));*/
+                break;
+        }
+
     }
 }
