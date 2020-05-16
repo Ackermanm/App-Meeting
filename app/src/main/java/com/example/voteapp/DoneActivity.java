@@ -23,6 +23,7 @@ public class DoneActivity extends AppCompatActivity {
         setContentView(R.layout.activity_done);
 
         textView = findViewById(R.id.textDetail);
+        textView.isSelected();
         Intent intent = getIntent();
         String userUid = intent.getStringExtra("User Uid");
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
