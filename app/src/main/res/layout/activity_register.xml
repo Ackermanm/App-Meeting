@@ -10,49 +10,58 @@
         android:id="@+id/Loginfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="175dp"
+        android:layout_marginTop="124dp"
+        android:layout_marginEnd="197dp"
         android:text="Log in"
-        tools:layout_editor_absoluteX="175dp"
-        tools:layout_editor_absoluteY="124dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/Lgbt"
+        android:id="@+id/buttonSignIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Log in"
-        tools:layout_editor_absoluteX="170dp"
-        tools:layout_editor_absoluteY="458dp" />
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="98dp"
+        android:onClick="SignInClicked"
+        android:text="sign in"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editPassword" />
 
-    <TextView
-        android:id="@+id/textView2"
+    <Button
+        android:id="@+id/buttonSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="User name"
-        tools:layout_editor_absoluteX="62dp"
-        tools:layout_editor_absoluteY="262dp" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Password"
-        tools:layout_editor_absoluteX="62dp"
-        tools:layout_editor_absoluteY="328dp" />
+        android:layout_marginTop="98dp"
+        android:layout_marginEnd="60dp"
+        android:onClick="SignUpClicked"
+        android:text="sign up"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editPassword" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/editEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="58dp"
         android:ems="10"
-        android:inputType="textPassword"
-        tools:layout_editor_absoluteX="138dp"
-        tools:layout_editor_absoluteY="313dp" />
-
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
+        android:hint="Email"
         android:inputType="textEmailAddress"
-        tools:layout_editor_absoluteX="138dp"
-        tools:layout_editor_absoluteY="241dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Loginfo" />
+
+    <EditText
+        android:id="@+id/editPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editEmail" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

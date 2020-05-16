@@ -1,20 +1,16 @@
 package com.example.voteapp;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class SetUpActivity extends AppCompatActivity {
+public class NewMeetingActivity extends AppCompatActivity {
 
     EditText titleText;
     Spinner spinner;
@@ -23,7 +19,7 @@ public class SetUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_set_up);
+        setContentView(R.layout.activity_new_meeting);
 
         titleText = findViewById(R.id.editTextTitle);
         returnTimeText = findViewById(R.id.textTimeResult); // Show selected date from calendar(Time Activity).

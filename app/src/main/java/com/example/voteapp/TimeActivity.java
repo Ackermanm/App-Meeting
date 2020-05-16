@@ -104,7 +104,7 @@ public class TimeActivity extends AppCompatActivity {
 
                     timeLayout.addView(textView);
                     timeLayoutDelete.addView(button);
-                    Intent intent = new Intent(TimeActivity.this,SetUpActivity.class);
+                    Intent intent = new Intent(TimeActivity.this, NewMeetingActivity.class);
 
                     intent.putExtra("selectedTime",date);
                     textView.setText(date);
