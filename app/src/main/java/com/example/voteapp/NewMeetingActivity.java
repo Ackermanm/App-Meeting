@@ -28,6 +28,7 @@ public class NewMeetingActivity extends AppCompatActivity {
     EditText titleText;
     Spinner spinner;
     TextView returnTimeText;
+    EditText deadlineText;
     User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,7 @@ public class NewMeetingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_meeting);
 
         titleText = findViewById(R.id.editTextTitle);
+        deadlineText = findViewById(R.id.editDeadline);
         returnTimeText = findViewById(R.id.textTimeResult); // Show selected date from calendar(Time Activity).
         // Location drop down list
          spinner = findViewById(R.id.spinnerLocation); // Locations are put in a spinner widget.
@@ -91,19 +93,28 @@ public class NewMeetingActivity extends AppCompatActivity {
      * @param v Done Button
      */
     public void DoneClicked(View v){
+        if (CheckEligibleMeeting()){
+            // Put all code in it.
+        }else {
+            Toast.makeText(this,"Non Eligible format.",Toast.LENGTH_SHORT).show();
+        }
         // Go to Done Activity
         final Intent intent = new Intent(this,DoneActivity.class);
         // Create a new meeting according to info we get from edit texts.
         String title = titleText.getText().toString();
         String location = spinner.getSelectedItem().toString();
+        String deadline = deadlineText.getText().toString();
         if (location.equals("location")){
             location = "";
         }
         String time = returnTimeText.getText().toString();
         String[] times = time.split("/");
-        List<String> timess = new ArrayList<>(Arrays.asList(times));
+        Map<String, Object> timess = new HashMap<String,Object>();
+        for (String t: times){
+            timess.put(t, 0);
+        }
         // Variables must be declared as final can be used in on Data Change method.
-        final Meeting meeting = new Meeting(title,location,timess);
+        final Meeting meeting = new Meeting(title,location,deadline,timess);
         Intent thisIntent = getIntent();
         // Get User Uid from Main activity.
         final String userUid = thisIntent.getStringExtra("User Uid");
@@ -135,5 +146,8 @@ public class NewMeetingActivity extends AppCompatActivity {
         myRef.updateChildren(values);
         startActivity(intent);*/
         // Method 2
+    }
+    public Boolean CheckEligibleMeeting(){
+        return true;
     }
 }

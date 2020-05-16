@@ -1,17 +1,30 @@
 package com.example.voteapp;
 
 import java.util.List;
+import java.util.Map;
 
 public class Meeting {
     String title;
     String location;
-    List<String> times;
+    String deadline;
+    // Map string for date, object for poll.
+    Map<String,Object> times;
+//    List<String> times;
 
-    public Meeting(String title, String location, List<String> times) {
+//    public Meeting(String title, String location, List<String> times) {
+//        this.title = title;
+//        this.location = location;
+//        this.times = times;
+//    }
+
+
+    public Meeting(String title, String location, String deadline, Map<String, Object> times) {
         this.title = title;
         this.location = location;
+        this.deadline = deadline;
         this.times = times;
     }
+
     // Empty constructor is used for generate instance from database.
     public Meeting(){
     }
@@ -32,11 +45,19 @@ public class Meeting {
         this.location = location;
     }
 
-    public List<String> getTimes() {
+    public String getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
+    }
+
+    public Map<String, Object> getTimes() {
         return times;
     }
 
-    public void setTimes(List<String> times) {
+    public void setTimes(Map<String, Object> times) {
         this.times = times;
     }
 }
