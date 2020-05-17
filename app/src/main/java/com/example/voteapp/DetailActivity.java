@@ -22,6 +22,7 @@ public class DetailActivity extends AppCompatActivity {
     TextView location;
     TextView deadline;
     User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +55,8 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
     }
-    public void UpdateUI(User user, String meetingIndex){
+
+    public void UpdateUI(User user, String meetingIndex) {
         Meeting meeting = user.meetings.get(Integer.parseInt(meetingIndex));
         title.setText(meeting.title);
         String l = "Location: " + meeting.location;
@@ -62,17 +64,18 @@ public class DetailActivity extends AppCompatActivity {
         String dl = "Deadline: " + meeting.deadline;
         deadline.setText(dl);
 
-        for (String key: meeting.times.keySet()){
+        for (String key : meeting.times.keySet()) {
             TextView textView = new TextView(this);
             String text = "Time: " + key + ", Vote: " + meeting.times.get(key);
             LinearLayout.LayoutParams llParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            llParams.setMargins(0,0,20,20);
+            llParams.setMargins(0, 0, 20, 20);
             textView.setText(text);
             textView.setLayoutParams(llParams);
             linearLayout.addView(textView);
         }
     }
-    public void BackClicked(View v){
+
+    public void BackClicked(View v) {
         finish();
     }
 }

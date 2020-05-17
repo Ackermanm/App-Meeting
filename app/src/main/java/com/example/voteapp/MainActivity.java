@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     String userUid;
     User user;
     DatabaseReference myRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,20 +39,22 @@ public class MainActivity extends AppCompatActivity {
         myRef = database.getReference(userUid);
         // Update User Interface using data from database.
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-            user = dataSnapshot.getValue(User.class);
-            if (user.meetings != null){
-                UpdateUI(user);
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                user = dataSnapshot.getValue(User.class);
+                if (user.meetings != null) {
+                    UpdateUI(user);
+                }
             }
-        }
-        @Override
-        public void onCancelled(DatabaseError error) {
-            // Failed to read value
-            Toast.makeText(MainActivity.this,"Failed to get data.",Toast.LENGTH_SHORT).show();
-        }
-    });
-}
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Toast.makeText(MainActivity.this, "Failed to get data.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
 // TODO deal with problem after creating a new meeting and click done, how to update UI.
     // TODO test when first delete a meeting and then add a meeting, then delete the first meeting, then click meeting, whether there is an error.
@@ -62,32 +65,35 @@ public class MainActivity extends AppCompatActivity {
     public void onStart(){
         super.onStart();
     }*/
+
     /**
      * Click add button, Go to Setup activity.
+     *
      * @param v Button Add
      */
-    public void AddMeetingClicked(View v){
+    public void AddMeetingClicked(View v) {
         Intent intent = new Intent(this, NewMeetingActivity.class);
-        intent.putExtra("User Uid",userUid);
+        intent.putExtra("User Uid", userUid);
         startActivity(intent);
     }
 
     /**
      * After a user login, update UI according to its data stored in database. Add all the meetings detail belongs this user.
+     *
      * @param user Current user
      */
     @SuppressLint("SetTextI18n")
-    public void UpdateUI(User user){
+    public void UpdateUI(User user) {
         final List<Meeting> meeting = user.meetings;
         int indexOfMeeting = 0;
-        for (final Meeting m: meeting){
-            if (m != null){ // Do not make UI for those deleted meeting.
-                LinearLayout.LayoutParams llHorizontal = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
-                llHorizontal.setMargins(20,10,20,10);
+        for (final Meeting m : meeting) {
+            if (m != null) { // Do not make UI for those deleted meeting.
+                LinearLayout.LayoutParams llHorizontal = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                llHorizontal.setMargins(20, 10, 20, 10);
                 // Set linear layout
-                LinearLayout.LayoutParams llVerticalText = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
+                LinearLayout.LayoutParams llVerticalText = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
                 llVerticalText.weight = 1;
-                LinearLayout.LayoutParams llVerticalDelete = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.MATCH_PARENT);
+                LinearLayout.LayoutParams llVerticalDelete = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
                 final LinearLayout llH = new LinearLayout(this);
                 llH.setOrientation(LinearLayout.HORIZONTAL);
@@ -101,9 +107,9 @@ public class MainActivity extends AppCompatActivity {
                 llVD.setOrientation(LinearLayout.VERTICAL);
                 llVD.setLayoutParams(llVerticalDelete);
 
-                LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
-                LinearLayout.LayoutParams buttonParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
-                buttonParams.setMargins(0,40,0,0);
+                LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                LinearLayout.LayoutParams buttonParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                buttonParams.setMargins(0, 40, 0, 0);
                 // Set title
                 TextView title = new TextView(this);
                 title.setLayoutParams(textParams);
@@ -118,10 +124,10 @@ public class MainActivity extends AppCompatActivity {
                 TextView time = new TextView(this);
                 time.setLayoutParams(textParams);
                 String allTime = "";
-                for (String key: m.times.keySet()){
+                for (String key : m.times.keySet()) {
                     allTime += (key + "/");
                 }
-                allTime = allTime.substring(0,allTime.length()-1);
+                allTime = allTime.substring(0, allTime.length() - 1);
                 time.setText(allTime);
                 // Set delete button
                 Button button = new Button(this);
@@ -148,8 +154,8 @@ public class MainActivity extends AppCompatActivity {
                 llVT.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(MainActivity.this,DetailActivity.class);
-                        intent.putExtra("meetingId",meetingId);
+                        Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+                        intent.putExtra("meetingId", meetingId);
                         startActivity(intent);
                     }
                 });
@@ -157,9 +163,10 @@ public class MainActivity extends AppCompatActivity {
             indexOfMeeting++;
         }
     }
-    public void UpdateDatabase(int index){
+
+    public void UpdateDatabase(int index) {
         List<Meeting> meeting = user.meetings;
-        meeting.set(index,null);
+        meeting.set(index, null);
         myRef.setValue(user);
     }
 }

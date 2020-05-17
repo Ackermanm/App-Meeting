@@ -27,6 +27,7 @@ public class VoteActivity extends AppCompatActivity {
     User user;
     String userId;
     String meetingIndex;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,9 +52,10 @@ public class VoteActivity extends AppCompatActivity {
                 user = dataSnapshot.getValue(User.class);
                 UpdateUI();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(VoteActivity.this,"Database eooro: on cancelled.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(VoteActivity.this, "Database eooro: on cancelled.", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -61,13 +63,13 @@ public class VoteActivity extends AppCompatActivity {
     /**
      * Update vote UI according to meeting details(title, location, times, radio buttons to choose time)
      */
-    public void UpdateUI(){
+    public void UpdateUI() {
         Meeting meeting = user.meetings.get(Integer.parseInt(meetingIndex));
         // Set title and location for the meeting
         title.setText(meeting.title);
         location.setText(meeting.location);
         int i = 0; // index for radio button.
-        for (String key: meeting.times.keySet()){
+        for (String key : meeting.times.keySet()) {
             // Create new horizontal linear layout to restore a meeting time.
             LinearLayout.LayoutParams llParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             LinearLayout ll = new LinearLayout(this);
@@ -83,7 +85,7 @@ public class VoteActivity extends AppCompatActivity {
             LinearLayout.LayoutParams llRb = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             cb.setLayoutParams(llRb);
             // Set ID for checkBox.
-            cb.setId(30200517+i);
+            cb.setId(30200517 + i);
             i++;
             // Add time and radio button to linear layout.
             ll.addView(time);
@@ -95,29 +97,31 @@ public class VoteActivity extends AppCompatActivity {
 
     /**
      * Click submit button, update vote info for the meeting.
+     *
      * @param v Submit button
      */
-    public void SubmitClicked(View v){
+    public void SubmitClicked(View v) {
         Meeting meeting = user.meetings.get(Integer.parseInt(meetingIndex));
         int i = 0; // index for radio button
-        for (String key: meeting.times.keySet()){
-            CheckBox cb = findViewById(30200517+i);
+        for (String key : meeting.times.keySet()) {
+            CheckBox cb = findViewById(30200517 + i);
             Boolean checked = cb.isChecked();
-            if (checked){
+            if (checked) {
                 meeting.times.put(key, ((Long) meeting.times.get(key)).intValue() + 1);
             }
             i++;
         }
         myRef.setValue(user);
-        Toast.makeText(this,"Submit success!",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Submit success!", Toast.LENGTH_SHORT).show();
         finish();
     }
 
     /**
      * Go back to main activity
+     *
      * @param v Button back
      */
-    public void BackClicked(View v){
+    public void BackClicked(View v) {
         finish();
     }
 }

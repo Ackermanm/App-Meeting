@@ -8,7 +8,7 @@ public class Meeting {
     String location;
     String deadline;
     // Map string for date, object for poll.
-    Map<String,Object> times;
+    Map<String, Object> times;
 //    List<String> times;
 
 //    public Meeting(String title, String location, List<String> times) {
@@ -26,7 +26,7 @@ public class Meeting {
     }
 
     // Empty constructor is used for generate instance from database.
-    public Meeting(){
+    public Meeting() {
     }
 
     public String getTitle() {

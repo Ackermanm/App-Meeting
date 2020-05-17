@@ -37,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     EditText userpasswordedit;
     String userUid;
     EditText meetingId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,13 +52,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
-//Animation to make the app more interesting still being developed
+    //Animation to make the app more interesting still being developed
     public void Mstar2(View view) {
         ImageView Star = (ImageView) findViewById(R.id.Mstar1);
         ObjectAnimator animator = ObjectAnimator.ofFloat(Star, "translationX", 900f);
         animator.setDuration(100);
         animator.reverse();
-       animator.setRepeatCount(Animation.INFINITE);
+        animator.setRepeatCount(Animation.INFINITE);
         animator.start();
     }
 
@@ -98,7 +99,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     userUid = user.getUid();
                     CreateNewUser();
 
-                }else {
+                } else {
                     Toast.makeText(getApplicationContext(), "Register failed", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -108,9 +109,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     /**
      * Create a new user when sign up successfully, and upload this new user to database.
      */
-    public void CreateNewUser(){
+    public void CreateNewUser() {
         List<Meeting> meetings = new ArrayList<>();
-        User user = new User(usernameedit.getText().toString(),meetings);
+        User user = new User(usernameedit.getText().toString(), meetings);
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRef = firebaseDatabase.getReference(userUid);
         myRef.setValue(user);
@@ -141,7 +142,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 if (task.isSuccessful()) {//check the result with the server if successfully login do this
                     Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                     FirebaseUser user = mAuth.getCurrentUser();
-                    intent.putExtra("User Uid",user.getUid());
+                    intent.putExtra("User Uid", user.getUid());
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//when press back button
                     startActivity(intent);
                 } else {
@@ -160,7 +161,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             case R.id.ButtonLogin:
 //                System.out.println("yes");
                 Login();
-               /* startActivity(new Intent(this, MainActivity.class));*/
+                /* startActivity(new Intent(this, MainActivity.class));*/
                 break;
         }
 
@@ -168,13 +169,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     /**
      * Test. enter meeting by meeting id(meeting id = User id + / + meeting index).
+     *
      * @param v
      */
-    public void GoVoteClicked(View v){
-        final Intent intent = new Intent(this,VoteActivity.class);
+    public void GoVoteClicked(View v) {
+        final Intent intent = new Intent(this, VoteActivity.class);
         // Get meeting id from edit text.
         final String text = meetingId.getText().toString();
-        if (EligibleMeetingId(text)){
+        if (EligibleMeetingId(text)) {
             String[] texts = text.split("/");
             String ref = texts[0];
             FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -182,27 +184,28 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()){
+                    if (dataSnapshot.exists()) {
 //                        Log.d("Exist data: ","Yes!");
-                        intent.putExtra("Meeting ID",text);
+                        intent.putExtra("Meeting ID", text);
                         startActivity(intent);
-                    }else {
+                    } else {
 //                        Log.d("Exist data: ","No!");
-                        Toast.makeText(RegisterActivity.this,"Incorrect meeting ID", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, "Incorrect meeting ID", Toast.LENGTH_SHORT).show();
                     }
                 }
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Log.d("Exist data: ","Go onCancelled.");
+                    Log.d("Exist data: ", "Go onCancelled.");
                 }
             });
-        }else {
-            Toast.makeText(this,"Wrong meeting ID format",Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Wrong meeting ID format", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public Boolean EligibleMeetingId(String meetingID){
-        if (!meetingID.contains("/")){
+    public Boolean EligibleMeetingId(String meetingID) {
+        if (!meetingID.contains("/")) {
             return false;
         }
         String[] info = meetingID.split("/");

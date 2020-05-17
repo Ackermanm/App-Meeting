@@ -17,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 public class DoneActivity extends AppCompatActivity {
     TextView textView;
     User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,8 +33,8 @@ public class DoneActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(User.class);
-                int index = user.meetings.size()-1;
-                String text = myRef.getKey()+ "/" + index;
+                int index = user.meetings.size() - 1;
+                String text = myRef.getKey() + "/" + index;
                 textView.setText(text);
             }
 
@@ -44,7 +45,7 @@ public class DoneActivity extends AppCompatActivity {
         });
     }
 
-    public void DoneClicked(View v){
+    public void DoneClicked(View v) {
         finish();
     }
 }

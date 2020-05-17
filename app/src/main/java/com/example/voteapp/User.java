@@ -10,8 +10,9 @@ public class User {
         this.email = email;
         this.meetings = meetings;
     }
+
     // Empty constructor is used for generate instance from database.
-    public User(){
+    public User() {
     }
 
     public String getEmail() {

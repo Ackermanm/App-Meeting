@@ -30,6 +30,7 @@ public class NewMeetingActivity extends AppCompatActivity {
     TextView returnTimeText;
     EditText deadlineText;
     User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,47 +40,50 @@ public class NewMeetingActivity extends AppCompatActivity {
         deadlineText = findViewById(R.id.editDeadline);
         returnTimeText = findViewById(R.id.textTimeResult); // Show selected date from calendar(Time Activity).
         // Location drop down list
-         spinner = findViewById(R.id.spinnerLocation); // Locations are put in a spinner widget.
+        spinner = findViewById(R.id.spinnerLocation); // Locations are put in a spinner widget.
         //  Adapter, connected from JAVA to UI. This adapter is used to connect Location spinner and items(XML).
-        ArrayAdapter<String> locationAdapter =new ArrayAdapter<String>(this,
+        ArrayAdapter<String> locationAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.locations));
         spinner.setAdapter(locationAdapter);
     }
 
     /**
      * Click cancel button, close this new adding.
+     *
      * @param v Button cancel.
      */
-    public void CancelClicked(View v){
+    public void CancelClicked(View v) {
 
         finish();
     }
 
     /**
-     *  Click time button, go to calendar(time activity).
+     * Click time button, go to calendar(time activity).
+     *
      * @param v Button Time
      */
-    public void TimeClicked(View v){
-        Intent intent = new Intent(this,TimeActivity.class);
-        startActivityForResult(intent,1);
+    public void TimeClicked(View v) {
+        Intent intent = new Intent(this, TimeActivity.class);
+        startActivityForResult(intent, 1);
     }
 
     /**
      * Get selected dates and show them in TextView.
+     *
      * @param requestCode Label the method that will go to get the result.
-     * @param resultCode Check which result we get.
-     * @param data The intent that wants to get extra.
+     * @param resultCode  Check which result we get.
+     * @param data        The intent that wants to get extra.
      */
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1){
-            if (resultCode == RESULT_OK){
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
                 String[] times = data.getStringArrayExtra("time"); // times: selected dates.
                 String allTime = "";
-                for (int i = 0; i < times.length; i++){
+                for (int i = 0; i < times.length; i++) {
                     allTime += times[i];
-                    if (i != times.length-1){
+                    if (i != times.length - 1) {
                         allTime += "/";
                     }
                 }
@@ -89,32 +93,33 @@ public class NewMeetingActivity extends AppCompatActivity {
     }
 
     /**
-     *  Click done button, deliver details of meeting to finish page(Done activiy).
+     * Click done button, deliver details of meeting to finish page(Done activiy).
+     *
      * @param v Done Button
      */
-    public void DoneClicked(View v){
-        if (CheckEligibleMeeting()){
+    public void DoneClicked(View v) {
+        if (CheckEligibleMeeting()) {
             // TODO put all code here after finishing checkEli method.
-        }else {
-            Toast.makeText(this,"Non Eligible format.",Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Non Eligible format.", Toast.LENGTH_SHORT).show();
         }
         // Go to Done Activity
-        final Intent intent = new Intent(this,DoneActivity.class);
+        final Intent intent = new Intent(this, DoneActivity.class);
         // Create a new meeting according to info we get from edit texts.
         String title = titleText.getText().toString();
         String location = spinner.getSelectedItem().toString();
         String deadline = deadlineText.getText().toString();
-        if (location.equals("location")){
+        if (location.equals("location")) {
             location = "";
         }
         String time = returnTimeText.getText().toString();
         String[] times = time.split("/");
-        Map<String, Object> timess = new HashMap<String,Object>();
-        for (String t: times){
+        Map<String, Object> timess = new HashMap<String, Object>();
+        for (String t : times) {
             timess.put(t, 0);
         }
         // Variables must be declared as final can be used in on Data Change method.
-        final Meeting meeting = new Meeting(title,location,deadline,timess);
+        final Meeting meeting = new Meeting(title, location, deadline, timess);
         Intent thisIntent = getIntent();
         // Get User Uid from Main activity.
         final String userUid = thisIntent.getStringExtra("User Uid");
@@ -126,20 +131,22 @@ public class NewMeetingActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(User.class);
-                if (user.meetings == null){
+                if (user.meetings == null) {
                     user.meetings = new ArrayList<Meeting>();
                 }
                 user.meetings.add(meeting);
                 myRef.setValue(user);
-                intent.putExtra("User Uid",userUid);
+                intent.putExtra("User Uid", userUid);
                 startActivity(intent);
                 finish(); // Close new meeting activity after we finish this form.
             }
+
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-                Toast.makeText(NewMeetingActivity.this,"Failed to update UI",Toast.LENGTH_SHORT).show();
-            }});
+                Toast.makeText(NewMeetingActivity.this, "Failed to update UI", Toast.LENGTH_SHORT).show();
+            }
+        });
         //Method 1, all these methods must be written in on Data Change method.
         /*int index = user.meetings.size();
         Map<String,Object> values = new HashMap<>();
@@ -148,8 +155,9 @@ public class NewMeetingActivity extends AppCompatActivity {
         startActivity(intent);*/
         // Method 2
     }
+
     // TODO check eligible meeting info.
-    public Boolean CheckEligibleMeeting(){
+    public Boolean CheckEligibleMeeting() {
         return true;
     }
 }
