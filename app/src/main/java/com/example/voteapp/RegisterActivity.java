@@ -7,6 +7,7 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.animation.Animation;
@@ -14,13 +15,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.internal.Objects;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -153,5 +158,49 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 break;
         }
 
+    }
+
+    /**
+     * Test. enter meeting by meeting id(meeting id = User id + / + meeting index).
+     * @param v
+     */
+    public void GoVoteClicked(View v){
+        final Intent intent = new Intent(this,VoteActivity.class);
+        // Get meeting id from edit text.
+        EditText meetingId = findViewById(R.id.editMeetingID);
+        final String text = meetingId.getText().toString();
+        if (EligibleMeetingId(text)){
+            String[] texts = text.split("/");
+            String ref = texts[0];
+            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = firebaseDatabase.getReference(ref);
+            myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()){
+//                        Log.d("Exist data: ","Yes!");
+                        intent.putExtra("Meeting ID",text);
+                        startActivity(intent);
+                    }else {
+//                        Log.d("Exist data: ","No!");
+                        Toast.makeText(RegisterActivity.this,"Incorrect meeting ID", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.d("Exist data: ","Go onCancelled.");
+                }
+            });
+        }else {
+            Toast.makeText(this,"Wrong meeting ID format",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public Boolean EligibleMeetingId(String meetingID){
+        if (!meetingID.contains("/")){
+            return false;
+        }
+        String[] info = meetingID.split("/");
+        return info.length == 2;
     }
 }
