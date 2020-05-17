@@ -6,4 +6,75 @@
     android:layout_height="match_parent"
     tools:context=".DetailActivity">
 
+    <LinearLayout
+        android:id="@+id/linearForDetail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="TextView"
+            android:textSize="36sp" />
+
+        <TextView
+            android:id="@+id/textLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="TextView"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/textDeadline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="TextView"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="Meeting ID:" />
+
+        <TextView
+            android:id="@+id/textMeetingID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="40dp"
+            android:text="TextView"
+            android:textIsSelectable="true"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/buttonBack"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="300dp"
+            android:layout_marginRight="20dp"
+            android:onClick="BackClicked"
+            android:text="back" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

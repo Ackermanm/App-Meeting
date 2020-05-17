@@ -54,6 +54,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * Every time create or start this activity, we update user UI according to database.
+     */
+/*    @Override
+    public void onStart(){
+        super.onStart();
+    }*/
+    /**
      * Click add button, Go to Setup activity.
      * @param v Button Add
      */
@@ -68,7 +75,8 @@ public class MainActivity extends AppCompatActivity {
      * @param user Current user
      */
     public void UpdateUI(User user){
-        List<Meeting> meeting = user.meetings;
+        final List<Meeting> meeting = user.meetings;
+
         for (Meeting m: meeting){
             LinearLayout.LayoutParams llParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.MATCH_PARENT);
             llParams.setMargins(10,10,10,20);
@@ -95,10 +103,12 @@ public class MainActivity extends AppCompatActivity {
             ll.addView(time);
             linearLayout.addView(ll);
 
+            final String meetingId = userUid + "/" + meeting.indexOf(m);
             ll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(MainActivity.this,DetailActivity.class);
+                    intent.putExtra("meetingId",meetingId);
                     startActivity(intent);
                 }
             });

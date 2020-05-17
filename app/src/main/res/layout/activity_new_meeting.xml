@@ -66,11 +66,12 @@
 
     <TextView
         android:id="@+id/textTimeResult"
-        android:layout_width="313dp"
+        android:layout_width="200dp"
         android:layout_height="80dp"
         android:layout_marginStart="176dp"
         android:layout_marginEnd="176dp"
         android:text="Selected dates"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonTime" />
@@ -84,6 +85,20 @@
         android:hint="DD-MM-YYYY"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textTimeResult" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="10dp"
+        android:text="Deadline"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/editDeadline"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textTimeResult" />
 

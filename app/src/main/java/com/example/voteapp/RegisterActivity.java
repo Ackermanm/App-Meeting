@@ -36,6 +36,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     EditText usernameedit;
     EditText userpasswordedit;
     String userUid;
+    EditText meetingId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +45,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         findViewById(R.id.ButtonLogin).setOnClickListener(this);
         usernameedit = (EditText) findViewById(R.id.username);
         userpasswordedit = (EditText) findViewById(R.id.password);
+        meetingId = findViewById(R.id.editMeetingID);
+
         mAuth = FirebaseAuth.getInstance();
 
     }
@@ -62,7 +65,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-
+        // Every time create or start this activity, clear text in username, password and meeting id.
+        usernameedit.setText("");
+        userpasswordedit.setText("");
+        meetingId.setText("");
     }
 
     public void register() {
@@ -167,7 +173,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     public void GoVoteClicked(View v){
         final Intent intent = new Intent(this,VoteActivity.class);
         // Get meeting id from edit text.
-        EditText meetingId = findViewById(R.id.editMeetingID);
         final String text = meetingId.getText().toString();
         if (EligibleMeetingId(text)){
             String[] texts = text.split("/");

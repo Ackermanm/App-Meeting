@@ -32,7 +32,7 @@ public class DoneActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(User.class);
-                int index = user.meetings.size();
+                int index = user.meetings.size()-1;
                 String text = myRef.getKey()+ "/" + index;
                 textView.setText(text);
             }
@@ -42,5 +42,9 @@ public class DoneActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void DoneClicked(View v){
+        finish();
     }
 }

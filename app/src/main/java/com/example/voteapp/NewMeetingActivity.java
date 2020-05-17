@@ -133,6 +133,7 @@ public class NewMeetingActivity extends AppCompatActivity {
                 myRef.setValue(user);
                 intent.putExtra("User Uid",userUid);
                 startActivity(intent);
+                finish(); // Close new meeting activity after we finish this form.
             }
             @Override
             public void onCancelled(DatabaseError error) {
