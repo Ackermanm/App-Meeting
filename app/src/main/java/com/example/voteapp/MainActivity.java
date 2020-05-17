@@ -2,9 +2,11 @@ package com.example.voteapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,16 +17,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
     LinearLayout linearLayout;
     String userUid;
     User user;
+    DatabaseReference myRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         userUid = intent.getStringExtra("User Uid");
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef = database.getReference(userUid);
+        myRef = database.getReference(userUid);
         // Update User Interface using data from database.
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
         @Override
@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 }
 
 // TODO deal with problem after creating a new meeting and click done, how to update UI.
+    // TODO test when first delete a meeting and then add a meeting, then delete the first meeting, then click meeting, whether there is an error.
     /**
      * Every time create or start this activity, we update user UI according to database.
      */
@@ -75,45 +76,91 @@ public class MainActivity extends AppCompatActivity {
      * After a user login, update UI according to its data stored in database. Add all the meetings detail belongs this user.
      * @param user Current user
      */
+    @SuppressLint("SetTextI18n")
     public void UpdateUI(User user){
         final List<Meeting> meeting = user.meetings;
+        int indexOfMeeting = 0;
+        for (final Meeting m: meeting){
+            if (m != null){ // Do not make UI for those deleted meeting.
+                LinearLayout.LayoutParams llHorizontal = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                llHorizontal.setMargins(20,10,20,10);
+                // Set linear layout
+                LinearLayout.LayoutParams llVerticalText = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
+                llVerticalText.weight = 1;
+                LinearLayout.LayoutParams llVerticalDelete = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.MATCH_PARENT);
 
-        for (Meeting m: meeting){
-            LinearLayout.LayoutParams llParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.MATCH_PARENT);
-            llParams.setMargins(10,10,10,20);
-            LinearLayout ll = new LinearLayout(this);
-            ll.setLayoutParams(llParams);
-            ll.setOrientation(LinearLayout.VERTICAL);
-            LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
-            TextView title = new TextView(this);
-            title.setLayoutParams(textParams);
-            TextView location = new TextView(this);
-            location.setLayoutParams(textParams);
-            TextView time = new TextView(this);
-            time.setLayoutParams(textParams);
-            title.setText(m.title);
-            location.setText(m.location);
-            String allTime = "";
-            for (String key: m.times.keySet()){
-                allTime += (key + "/");
-            }
-            allTime = allTime.substring(0,allTime.length()-1);
-            time.setText(allTime);
-            ll.addView(title);
-            ll.addView(location);
-            ll.addView(time);
-            linearLayout.addView(ll);
+                final LinearLayout llH = new LinearLayout(this);
+                llH.setOrientation(LinearLayout.HORIZONTAL);
+                llH.setLayoutParams(llHorizontal);
 
-            final String meetingId = userUid + "/" + meeting.indexOf(m);
-            ll.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(MainActivity.this,DetailActivity.class);
-                    intent.putExtra("meetingId",meetingId);
-                    startActivity(intent);
+                LinearLayout llVT = new LinearLayout(this);
+                llVT.setOrientation(LinearLayout.VERTICAL);
+                llVT.setLayoutParams(llVerticalText);
+
+                LinearLayout llVD = new LinearLayout(this);
+                llVD.setOrientation(LinearLayout.VERTICAL);
+                llVD.setLayoutParams(llVerticalDelete);
+
+                LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                LinearLayout.LayoutParams buttonParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                buttonParams.setMargins(0,40,0,0);
+                // Set title
+                TextView title = new TextView(this);
+                title.setLayoutParams(textParams);
+                title.setText(m.title);
+                title.setTextSize(18);
+                // Set location
+                TextView location = new TextView(this);
+                location.setLayoutParams(textParams);
+                location.setTextSize(18);
+                location.setText(m.location);
+                // Set time
+                TextView time = new TextView(this);
+                time.setLayoutParams(textParams);
+                String allTime = "";
+                for (String key: m.times.keySet()){
+                    allTime += (key + "/");
                 }
-            });
+                allTime = allTime.substring(0,allTime.length()-1);
+                time.setText(allTime);
+                // Set delete button
+                Button button = new Button(this);
+                button.setText("Delete");
+                button.setLayoutParams(buttonParams);
+                final int finalIndexOfMeeting = indexOfMeeting;
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        linearLayout.removeView(llH);
+                        UpdateDatabase(finalIndexOfMeeting);
+                    }
+                });
+                // Add all views into linear layout, finally add into this page
+                llVT.addView(title);
+                llVT.addView(location);
+                llVT.addView(time);
+                llVD.addView(button);
+                llH.addView(llVT);
+                llH.addView(llVD);
+                linearLayout.addView(llH);
+                // Go to the detail of meeting by clicking the meeting.
+                final String meetingId = userUid + "/" + meeting.indexOf(m);
+                llVT.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this,DetailActivity.class);
+                        intent.putExtra("meetingId",meetingId);
+                        startActivity(intent);
+                    }
+                });
+            }
+            indexOfMeeting++;
         }
+    }
+    public void UpdateDatabase(int index){
+        List<Meeting> meeting = user.meetings;
+        meeting.set(index,null);
+        myRef.setValue(user);
     }
 }
 

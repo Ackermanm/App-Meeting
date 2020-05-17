@@ -66,7 +66,7 @@ public class DetailActivity extends AppCompatActivity {
             TextView textView = new TextView(this);
             String text = "Time: " + key + ", Vote: " + meeting.times.get(key);
             LinearLayout.LayoutParams llParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            llParams.setMargins(60,0,20,20);
+            llParams.setMargins(0,0,20,20);
             textView.setText(text);
             textView.setLayoutParams(llParams);
             linearLayout.addView(textView);
