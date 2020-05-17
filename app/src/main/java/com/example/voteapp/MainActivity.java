@@ -38,21 +38,22 @@ public class MainActivity extends AppCompatActivity {
         final DatabaseReference myRef = database.getReference(userUid);
         // Update User Interface using data from database.
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                user = dataSnapshot.getValue(User.class);
-                if (user.meetings != null){
-                    UpdateUI(user);
-                }
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            user = dataSnapshot.getValue(User.class);
+            if (user.meetings != null){
+                UpdateUI(user);
             }
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Toast.makeText(MainActivity.this,"Failed to get data.",Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+        }
+        @Override
+        public void onCancelled(DatabaseError error) {
+            // Failed to read value
+            Toast.makeText(MainActivity.this,"Failed to get data.",Toast.LENGTH_SHORT).show();
+        }
+    });
+}
 
+// TODO deal with problem after creating a new meeting and click done, how to update UI.
     /**
      * Every time create or start this activity, we update user UI according to database.
      */

@@ -94,7 +94,7 @@ public class NewMeetingActivity extends AppCompatActivity {
      */
     public void DoneClicked(View v){
         if (CheckEligibleMeeting()){
-            // Put all code in it.
+            // TODO put all code here after finishing checkEli method.
         }else {
             Toast.makeText(this,"Non Eligible format.",Toast.LENGTH_SHORT).show();
         }
@@ -148,6 +148,7 @@ public class NewMeetingActivity extends AppCompatActivity {
         startActivity(intent);*/
         // Method 2
     }
+    // TODO check eligible meeting info.
     public Boolean CheckEligibleMeeting(){
         return true;
     }
