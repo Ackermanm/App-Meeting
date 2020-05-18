@@ -34,19 +34,21 @@ public class DetailActivity extends AppCompatActivity {
         deadline = findViewById(R.id.textDeadline);
         TextView meetingID = findViewById(R.id.textMeetingID);
         Intent intent = getIntent();
-        String meeting = intent.getStringExtra("meetingId");
+        final String meeting = intent.getStringExtra("meetingId");
         // Show meeting id.
         meetingID.setText(meeting);
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         String[] info = meeting.split("/");
         final String userId = info[0];
         final String meetingIndex = info[1];
-        DatabaseReference myRef = firebaseDatabase.getReference(userId);
+        DatabaseReference myRef = firebaseDatabase.getReference(userId).child("meetings").child(meetingIndex);
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                user = dataSnapshot.getValue(User.class);
-                UpdateUI(user, meetingIndex);
+//                user = dataSnapshot.getValue(User.class);
+                Meeting m = dataSnapshot.getValue(Meeting.class);
+//                UpdateUI(user, meetingIndex);
+                UpdateUI(m);
             }
 
             @Override
@@ -56,8 +58,8 @@ public class DetailActivity extends AppCompatActivity {
         });
     }
 
-    public void UpdateUI(User user, String meetingIndex) {
-        Meeting meeting = user.meetings.get(Integer.parseInt(meetingIndex));
+    public void UpdateUI(Meeting meeting) {
+//        Meeting meeting = user.meetings.get(Integer.parseInt(meetingIndex));
         title.setText(meeting.title);
         String l = "Location: " + meeting.location;
         location.setText(l);

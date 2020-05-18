@@ -35,6 +35,17 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userUid = intent.getStringExtra("User Uid");
 
+
+    }
+
+
+    /**
+     * Every time create or start this activity, we update user UI according to database.
+     */
+    @Override
+    public void onStart(){
+        super.onStart();
+        linearLayout.removeAllViews();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         myRef = database.getReference(userUid);
         // Update User Interface using data from database.
@@ -54,17 +65,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
-// TODO deal with problem after creating a new meeting and click done, how to update UI.
-    // TODO test when first delete a meeting and then add a meeting, then delete the first meeting, then click meeting, whether there is an error.
-    /**
-     * Every time create or start this activity, we update user UI according to database.
-     */
-/*    @Override
-    public void onStart(){
-        super.onStart();
-    }*/
 
     /**
      * Click add button, Go to Setup activity.
@@ -164,9 +164,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     public void UpdateDatabase(int index) {
         List<Meeting> meeting = user.meetings;
         meeting.set(index, null);
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
         myRef.setValue(user);
     }
 }

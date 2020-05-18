@@ -145,13 +145,6 @@ public class NewMeetingActivity extends AppCompatActivity {
                 Toast.makeText(NewMeetingActivity.this, "Failed to update UI", Toast.LENGTH_SHORT).show();
             }
         });
-        //Method 1, all these methods must be written in on Data Change method.
-        /*int index = user.meetings.size();
-        Map<String,Object> values = new HashMap<>();
-        values.put("/" + userUid + "/" + "/meetings/" + index, meeting);
-        myRef.updateChildren(values);
-        startActivity(intent);*/
-        // Method 2
     }
 
     // TODO check eligible meeting info.
