@@ -4,8 +4,15 @@
     <string-array name="locations">
 
         <item>location</item>
+        <item>Defined by myself</item>
+        <item>Meeting room</item>
         <item>Student center</item>
-        <item>Phone</item>
+        <item>Office</item>
+        <item>Skype</item>
         <item>Zoom</item>
+        <item>Phone</item>
+
     </string-array>
 </resources>
+
+

@@ -3,6 +3,9 @@ package com.example.voteapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -34,8 +37,6 @@ public class MainActivity extends AppCompatActivity {
         // Get User Uid from register activity.
         Intent intent = getIntent();
         userUid = intent.getStringExtra("User Uid");
-
-
     }
 
 
@@ -98,11 +99,11 @@ public class MainActivity extends AppCompatActivity {
                 final LinearLayout llH = new LinearLayout(this);
                 llH.setOrientation(LinearLayout.HORIZONTAL);
                 llH.setLayoutParams(llHorizontal);
-
+                // Set linear layout includes info.
                 LinearLayout llVT = new LinearLayout(this);
                 llVT.setOrientation(LinearLayout.VERTICAL);
                 llVT.setLayoutParams(llVerticalText);
-
+                // Include delete button.
                 LinearLayout llVD = new LinearLayout(this);
                 llVD.setOrientation(LinearLayout.VERTICAL);
                 llVD.setLayoutParams(llVerticalDelete);
@@ -137,8 +138,7 @@ public class MainActivity extends AppCompatActivity {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        linearLayout.removeView(llH);
-                        UpdateDatabase(finalIndexOfMeeting);
+                    dialogShow(llH, finalIndexOfMeeting);
                     }
                 });
                 // Add all views into linear layout, finally add into this page
@@ -174,6 +174,25 @@ public class MainActivity extends AppCompatActivity {
     public void onPause(){
         super.onPause();
         myRef.setValue(user);
+    }
+
+    /**
+     * Dialog, yes to delete meeting, no cancel.
+     * @param v The linear layout that includes the meeting detail.
+     * @param finalIndexOfMeeting Index of the meeting.
+     */
+    public void dialogShow(final View v, final int finalIndexOfMeeting){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setMessage("Do you want to delete this meeting?");
+        dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                linearLayout.removeView(v);
+                UpdateDatabase(finalIndexOfMeeting);
+            }
+        });
+        dialog.setNegativeButton("No",null);
+        dialog.show();
     }
 }
 
