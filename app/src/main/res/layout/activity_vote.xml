@@ -30,11 +30,20 @@
             android:layout_height="62dp"
             android:layout_marginTop="5dp"
             android:text="location"
-            android:textSize="36sp" />
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textDeadlineVote"
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:layout_marginTop="5dp"
+            android:text="location"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearForSubmit"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:orientation="horizontal"
