@@ -10,11 +10,10 @@
         android:id="@+id/calendarTime"
         android:layout_width="370dp"
         android:layout_height="301dp"
-        android:layout_marginTop="28dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteY="85dp" />
 
     <LinearLayout
         android:id="@+id/linearChosenDate"
@@ -58,5 +57,14 @@
         android:text="Done"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearChosenDateDelete" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:switchTextAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:text="llll"
+        tools:layout_editor_absoluteX="30dp"
+        tools:layout_editor_absoluteY="27dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
