@@ -51,7 +51,7 @@ public class Meeting {
         return duration;
     }
 
-    public void setDuration(String location) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 
