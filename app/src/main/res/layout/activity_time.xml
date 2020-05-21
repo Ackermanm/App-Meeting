@@ -6,15 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".TimeActivity">
 
-    <TextView
-        android:id="@+id/startDate"
-        android:layout_width="118dp"
-        android:layout_height="23dp"
-        android:layout_marginBottom="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <CalendarView
         android:id="@+id/calendarTime"
         android:layout_width="370dp"
@@ -32,7 +23,7 @@
         android:layout_marginStart="48dp"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarTime"/>
+        app:layout_constraintTop_toBottomOf="@+id/calendarTime" />
 
     <LinearLayout
         android:id="@+id/linearChosenDateDelete"
@@ -42,7 +33,7 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/linearChosenDate"
         app:layout_constraintStart_toEndOf="@+id/linearChosenDate"
-        app:layout_constraintTop_toTopOf="@+id/linearChosenDate"/>
+        app:layout_constraintTop_toTopOf="@+id/linearChosenDate" />
 
     <Button
         android:id="@+id/buttonCancelTime"
@@ -95,11 +86,28 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/startDate"
         app:layout_constraintEnd_toStartOf="@+id/startDate" />
 
-    <TextView
+    <EditText
+        android:id="@+id/startDate"
+        android:layout_width="117dp"
+        android:layout_height="41dp"
+        android:layout_marginBottom="100dp"
+        android:editable="false"
+        android:ems="10"
+        android:hint="dd-MM-yyyy"
+        android:inputType="date"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
         android:id="@+id/startTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="70dp"
+        android:layout_height="41dp"
         android:layout_marginStart="16dp"
+        android:editable="false"
+        android:ems="10"
+        android:hint="HH:mm"
+        android:inputType="time"
         app:layout_constraintBaseline_toBaselineOf="@+id/startDate"
         app:layout_constraintStart_toEndOf="@+id/startDate" />
 
