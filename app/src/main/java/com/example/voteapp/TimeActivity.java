@@ -24,7 +24,6 @@ import java.util.Arrays;
 public class TimeActivity extends AppCompatActivity {
 
     CalendarView calendarView;
-    String timeString = "";
     TextView startDate;
     String clockString;
 
