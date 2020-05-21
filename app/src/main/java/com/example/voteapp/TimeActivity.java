@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -121,16 +122,36 @@ public class TimeActivity extends AppCompatActivity {
         /**
          * Show time picker when click switch button
          */
-        Switch switchButton = (Switch) findViewById(R.id.switchAddTime);
+        final Switch switchButton = (Switch) findViewById(R.id.switchAddTime);
         switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                DialogFragment newFragment = new TimePickerFragment();
                 if (isChecked) {
-                    DialogFragment newFragment = new TimePickerFragment();
                     newFragment.show(getSupportFragmentManager(), "timePicker");
+                } else {
+                    TextView textView = findViewById(R.id.startTime);
+                    textView.setText("");
                 }
             }
         });
+    }
+
+    /**
+     * The result of time picker when click ok
+     */
+    public void showTimePickerResult(int hour, int minute) {
+        String timeString = Integer.toString(hour) + ":" + Integer.toString(minute);
+        TextView textView = findViewById(R.id.startTime);
+        textView.setText(timeString);
+    }
+
+    /**
+     * The result of time picker when click Cancel
+     */
+    public void clickCancelTimePicker() {
+        Switch switchbutton = (Switch) findViewById(R.id.switchAddTime);
+        switchbutton.setChecked(false);
     }
 
     /**

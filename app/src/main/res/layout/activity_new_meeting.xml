@@ -43,12 +43,12 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/buttonTime"
+        android:id="@+id/buttonAddTimeslot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:onClick="TimeClicked"
-        android:text="time"
+        android:text="Add"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editNewLocation" />
@@ -63,7 +63,7 @@
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonTime" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonAddTimeslot" />
 
     <EditText
         android:id="@+id/editDeadline"
