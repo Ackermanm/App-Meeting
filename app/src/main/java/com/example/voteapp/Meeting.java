@@ -47,6 +47,14 @@ public class Meeting {
         this.location = location;
     }
 
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String location) {
+        this.duration = duration;
+    }
+
     public String getDeadline() {
         return deadline;
     }
