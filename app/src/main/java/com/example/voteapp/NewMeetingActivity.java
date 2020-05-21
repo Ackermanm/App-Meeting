@@ -5,10 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +28,7 @@ public class NewMeetingActivity extends AppCompatActivity {
     EditText deadlineText;
     User user;
     String allTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,9 +80,9 @@ public class NewMeetingActivity extends AppCompatActivity {
                  * Following two lines are adapted from online code
                  * Source: https://android--examples.blogspot.com/2015/01/textview-new-line-multiline-in-android.html
                  */
-                if (returnTimeText.getText().toString().equals("")){
+                if (returnTimeText.getText().toString().equals("")) {
                     returnTimeText.setText(time);
-                }else {
+                } else {
                     returnTimeText.append(System.getProperty("line.separator"));
                     returnTimeText.append(time);
                 }
@@ -135,6 +133,7 @@ public class NewMeetingActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish(); // Close new meeting activity after we finish this form.
                 }
+
                 @Override
                 public void onCancelled(DatabaseError error) {
                     // Failed to read value
@@ -146,43 +145,44 @@ public class NewMeetingActivity extends AppCompatActivity {
 
     /**
      * Check correct format of meeting information.
-     * @param title title of meeting
+     *
+     * @param title    title of meeting
      * @param location location of meeting
      * @param deadline deadline of meeting
-     * @param times dates of meeting
+     * @param times    dates of meeting
      * @return true if all information are correct format.
      */
     public Boolean CheckEligibleMeeting(String title, String location, String duration, String deadline, String[] times) {
         String[] arrayDl = deadline.split("-");
-        if (title.equals("")){
-            Toast.makeText(this,"Empty title",Toast.LENGTH_SHORT).show();
+        if (title.equals("")) {
+            Toast.makeText(this, "Empty title", Toast.LENGTH_SHORT).show();
             return false;
-        }else if (location.equals("")){
-            Toast.makeText(this,"Empty location",Toast.LENGTH_SHORT).show();
+        } else if (location.equals("")) {
+            Toast.makeText(this, "Empty location", Toast.LENGTH_SHORT).show();
             return false;
-        }else if (duration.equals("")) {
+        } else if (duration.equals("")) {
             Toast.makeText(this, "Empty duration", Toast.LENGTH_SHORT);
             return false;
-        } else if (deadline.equals("")){
-            Toast.makeText(this,"Empty deadline",Toast.LENGTH_SHORT).show();
+        } else if (deadline.equals("")) {
+            Toast.makeText(this, "Empty deadline", Toast.LENGTH_SHORT).show();
             return false;
-        }else if (arrayDl.length != 3){
-            Toast.makeText(this,"Wrong deadline format",Toast.LENGTH_SHORT).show();
+        } else if (arrayDl.length != 3) {
+            Toast.makeText(this, "Wrong deadline format", Toast.LENGTH_SHORT).show();
             return false;
-        }else if (times.length == 0 || times[0].equals("Selected dates")){
-            Toast.makeText(this,"Empty schedule",Toast.LENGTH_SHORT).show();
+        } else if (times.length == 0 || times[0].equals("Selected dates")) {
+            Toast.makeText(this, "Empty schedule", Toast.LENGTH_SHORT).show();
             return false;
         }
         try {
-            if (Integer.parseInt(arrayDl[0]) <= 0 || Integer.parseInt(arrayDl[0]) > 31){
-                Toast.makeText(this,"Wrong deadline format",Toast.LENGTH_SHORT).show();
+            if (Integer.parseInt(arrayDl[0]) <= 0 || Integer.parseInt(arrayDl[0]) > 31) {
+                Toast.makeText(this, "Wrong deadline format", Toast.LENGTH_SHORT).show();
                 return false;
-            }else if (Integer.parseInt(arrayDl[1]) <= 0 || Integer.parseInt(arrayDl[1]) > 12){
-                Toast.makeText(this,"Wrong deadline format",Toast.LENGTH_SHORT).show();
+            } else if (Integer.parseInt(arrayDl[1]) <= 0 || Integer.parseInt(arrayDl[1]) > 12) {
+                Toast.makeText(this, "Wrong deadline format", Toast.LENGTH_SHORT).show();
                 return false;
             }
-        }catch (NumberFormatException e){
-            Toast.makeText(this,"Wrong deadline format",Toast.LENGTH_SHORT).show();
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Wrong deadline format", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;

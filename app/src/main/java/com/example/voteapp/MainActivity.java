@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
      * Every time create or start this activity, we update user UI according to database.
      */
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
         linearLayout.removeAllViews();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -138,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                    dialogShow(llH, finalIndexOfMeeting);
+                        dialogShow(llH, finalIndexOfMeeting);
                     }
                 });
                 // Add all views into linear layout, finally add into this page
@@ -171,17 +170,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
         myRef.setValue(user);
     }
 
     /**
      * Dialog, yes to delete meeting, no cancel.
-     * @param v The linear layout that includes the meeting detail.
+     *
+     * @param v                   The linear layout that includes the meeting detail.
      * @param finalIndexOfMeeting Index of the meeting.
      */
-    public void dialogShow(final View v, final int finalIndexOfMeeting){
+    public void dialogShow(final View v, final int finalIndexOfMeeting) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setMessage("Do you want to delete this meeting?");
         dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
                 UpdateDatabase(finalIndexOfMeeting);
             }
         });
-        dialog.setNegativeButton("No",null);
+        dialog.setNegativeButton("No", null);
         dialog.show();
     }
 }

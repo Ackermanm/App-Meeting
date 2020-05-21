@@ -5,13 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,9 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.logging.SimpleFormatter;
 
 public class VoteActivity extends AppCompatActivity {
     LinearLayout linearLayout;
@@ -90,7 +86,7 @@ public class VoteActivity extends AppCompatActivity {
         Date deadlineDate = sdf.parse(meeting.deadline);
         String n = "20-05-2020";
         Date now = sdf.parse(n);
-        if (deadlineDate.compareTo(now) > 0){
+        if (deadlineDate.compareTo(now) > 0) {
             // Set title and location for the meeting
             int i = 0; // index for radio button.
             for (String key : meeting.times.keySet()) {
@@ -117,13 +113,13 @@ public class VoteActivity extends AppCompatActivity {
                 // Add new linear layout to vote page.
                 linearLayout.addView(ll);
             }
-        }else{
+        } else {
             String result = "";
             int voteTime = 0;
             for (String key : meeting.times.keySet()) {
-                Long l = (Long)meeting.times.get(key);
+                Long l = (Long) meeting.times.get(key);
                 int time = l.intValue();
-                if (time > voteTime){
+                if (time > voteTime) {
                     voteTime = time;
                     result = key;
                 }
@@ -139,7 +135,6 @@ public class VoteActivity extends AppCompatActivity {
             Button submit = findViewById(R.id.buttonSubmit);
             ll.removeView(submit);
         }
-
 
 
     }
