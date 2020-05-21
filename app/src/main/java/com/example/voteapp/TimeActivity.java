@@ -30,13 +30,8 @@ public class TimeActivity extends AppCompatActivity {
     String[] times;
     Boolean reachLimit;
     Boolean existTime;
-
-    String clockString = "";
-
-    public String getTimeString() {
-        return "";
-    }
-
+    String clockString;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
