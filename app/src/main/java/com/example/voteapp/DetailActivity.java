@@ -20,6 +20,7 @@ public class DetailActivity extends AppCompatActivity {
     LinearLayout linearLayout;
     TextView title;
     TextView location;
+    TextView duration;
     TextView deadline;
     User user;
 
@@ -31,6 +32,7 @@ public class DetailActivity extends AppCompatActivity {
         linearLayout = findViewById(R.id.linearForDetail);
         title = findViewById(R.id.textTitle);
         location = findViewById(R.id.textLocation);
+        duration = findViewById(R.id.textDuration);
         deadline = findViewById(R.id.textDeadline);
         TextView meetingID = findViewById(R.id.textMeetingID);
         Intent intent = getIntent();
@@ -63,6 +65,8 @@ public class DetailActivity extends AppCompatActivity {
         title.setText(meeting.title);
         String l = "Location: " + meeting.location;
         location.setText(l);
+        String dura = "Duration: " + meeting.duration;
+        duration.setText(dura);
         String dl = "Deadline: " + meeting.deadline;
         deadline.setText(dl);
 

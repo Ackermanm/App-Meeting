@@ -31,6 +31,13 @@
             android:textSize="24sp" />
 
         <TextView
+            android:id="@+id/textDuration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textSize="24sp" />
+
+        <TextView
             android:id="@+id/textDeadline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
