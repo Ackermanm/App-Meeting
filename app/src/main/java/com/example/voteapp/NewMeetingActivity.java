@@ -76,23 +76,17 @@ public class NewMeetingActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                String[] times = data.getStringArrayExtra("time"); // times: selected dates.
-                allTime = "";
-                for (int i = 0; i < times.length; i++) {
-                    allTime += times[i];
-                    if (i != times.length - 1) {
-                        allTime += "/";
-                    }
-                    if (i == 0){
-                        returnTimeText.setText(times[i]);
-                    }else {
-                        /**
-                         * Following two lines are adapted from online code
-                         * Source: https://android--examples.blogspot.com/2015/01/textview-new-line-multiline-in-android.html
-                         */
-                        returnTimeText.append(System.getProperty("line.separator"));
-                        returnTimeText.append(times[i]);
-                    }
+                String time = data.getStringExtra("time"); // times: selected dates.
+                allTime += time + "/";
+                /**
+                 * Following two lines are adapted from online code
+                 * Source: https://android--examples.blogspot.com/2015/01/textview-new-line-multiline-in-android.html
+                 */
+                if (returnTimeText.getText().toString().equals("")){
+                    returnTimeText.setText(time);
+                }else {
+                    returnTimeText.append(System.getProperty("line.separator"));
+                    returnTimeText.append(time);
                 }
             }
         }
@@ -109,8 +103,7 @@ public class NewMeetingActivity extends AppCompatActivity {
         String location = locationText.getText().toString();
         String duration = durationText.getText().toString();
         String deadline = deadlineText.getText().toString();
-        String time = allTime;
-        String[] times = time.split("/");
+        String[] times = allTime.split("/");
         if (!CheckEligibleMeeting(title, location, duration, deadline, times)) {
 
         } else {
