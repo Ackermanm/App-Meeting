@@ -55,11 +55,11 @@ public class NewMeetingActivity extends AppCompatActivity {
     }
 
     /**
-     * Click time button, go to calendar(time activity).
+     * Click Add button, go to calendar(time activity).
      *
      * @param v Button Time
      */
-    public void TimeClicked(View v) {
+    public void AddClicked(View v) {
         Intent intent = new Intent(this, TimeActivity.class);
         startActivityForResult(intent, 1);
     }
