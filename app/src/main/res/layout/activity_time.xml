@@ -16,31 +16,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/switchAddTime" />
 
-    <LinearLayout
-        android:id="@+id/linearChosenDate"
-        android:layout_width="222dp"
-        android:layout_height="210dp"
-        android:layout_marginStart="48dp"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarTime" />
-
-    <LinearLayout
-        android:id="@+id/linearChosenDateDelete"
-        android:layout_width="104dp"
-        android:layout_height="210dp"
-        android:layout_marginBottom="1dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/linearChosenDate"
-        app:layout_constraintStart_toEndOf="@+id/linearChosenDate"
-        app:layout_constraintTop_toTopOf="@+id/linearChosenDate" />
-
     <Button
         android:id="@+id/buttonCancelTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="88dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="64dp"
         android:onClick="CancelTimeClicked"
         android:text="Cancel"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -48,10 +29,10 @@
 
     <Button
         android:id="@+id/buttonDoneTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="88dp"
+        android:layout_height="46dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="64dp"
         android:onClick="DoneTimeClicked"
         android:text="Done"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -90,7 +71,7 @@
         android:id="@+id/startDate"
         android:layout_width="78dp"
         android:layout_height="32dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="200dp"
         android:hint="dd-MM-yyyy"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

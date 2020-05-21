@@ -13,6 +13,7 @@
         android:orientation="vertical"
         android:paddingLeft="20dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -53,8 +54,8 @@
 
         <Button
             android:id="@+id/buttonBack"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
+            android:layout_width="88dp"
+            android:layout_height="46dp"
             android:layout_marginLeft="20dp"
             android:onClick="BackClicked"
             android:text="Back" />
@@ -67,8 +68,8 @@
 
         <Button
             android:id="@+id/buttonSubmit"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
+            android:layout_width="88dp"
+            android:layout_height="46dp"
             android:layout_marginRight="20dp"
             android:onClick="SubmitClicked"
             android:text="submit" />
