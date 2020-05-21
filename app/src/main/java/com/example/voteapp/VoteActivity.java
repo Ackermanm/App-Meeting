@@ -27,6 +27,7 @@ public class VoteActivity extends AppCompatActivity {
     LinearLayout linearLayout;
     TextView title;
     TextView location;
+    TextView duration;
     TextView deadline;
     DatabaseReference myRef;
     User user;
@@ -41,6 +42,7 @@ public class VoteActivity extends AppCompatActivity {
         linearLayout = findViewById(R.id.linearForMeeting);
         title = findViewById(R.id.textTitle);
         location = findViewById(R.id.textLocation);
+        duration = findViewById(R.id.textDuration);
         deadline = findViewById(R.id.textDeadlineVote);
         // Get meeting id(including user id and meeting index).
         Intent thisIntent = getIntent();
@@ -79,6 +81,8 @@ public class VoteActivity extends AppCompatActivity {
         title.setText(t);
         String lo = "Location: " + meeting.location;
         location.setText(lo);
+        String dura = "Duration: " + meeting.duration;
+        duration.setText(dura);
         String d = "Vote deadline: " + meeting.deadline;
         deadline.setText(d);
 //        Date now = Calendar.getInstance().getTime();
