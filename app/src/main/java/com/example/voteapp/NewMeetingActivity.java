@@ -26,6 +26,7 @@ public class NewMeetingActivity extends AppCompatActivity {
 
     EditText titleText;
     EditText locationText; // spinner for location choice
+    EditText durationText;
     TextView returnTimeText;
     EditText deadlineText;
     User user;
@@ -40,6 +41,7 @@ public class NewMeetingActivity extends AppCompatActivity {
         returnTimeText = findViewById(R.id.textTimeResult); // Show selected date from calendar(Time Activity).
         // Location
         locationText = findViewById(R.id.editNewLocation);
+        durationText = findViewById(R.id.editMeetingDuration);
     }
 
     /**
@@ -105,10 +107,11 @@ public class NewMeetingActivity extends AppCompatActivity {
         // Create a new meeting according to info we get from edit texts.
         String title = titleText.getText().toString();
         String location = locationText.getText().toString();
+        String duration = durationText.getText().toString();
         String deadline = deadlineText.getText().toString();
         String time = allTime;
         String[] times = time.split("/");
-        if (!CheckEligibleMeeting(title, location, deadline, times)) {
+        if (!CheckEligibleMeeting(title, location, duration, deadline, times)) {
 
         } else {
             // Go to Done Activity
@@ -118,7 +121,7 @@ public class NewMeetingActivity extends AppCompatActivity {
                 timess.put(t, 0);
             }
             // Variables must be declared as final can be used in on Data Change method.
-            final Meeting meeting = new Meeting(title, location, deadline, timess);
+            final Meeting meeting = new Meeting(title, location, duration, deadline, timess);
             Intent thisIntent = getIntent();
             // Get User Uid from Main activity.
             final String userUid = thisIntent.getStringExtra("User Uid");
@@ -156,15 +159,18 @@ public class NewMeetingActivity extends AppCompatActivity {
      * @param times dates of meeting
      * @return true if all information are correct format.
      */
-    public Boolean CheckEligibleMeeting(String title, String location, String deadline, String[] times) {
+    public Boolean CheckEligibleMeeting(String title, String location, String duration, String deadline, String[] times) {
         String[] arrayDl = deadline.split("-");
         if (title.equals("")){
             Toast.makeText(this,"Empty title",Toast.LENGTH_SHORT).show();
             return false;
-        }else if (location.equals("location")){
+        }else if (location.equals("")){
             Toast.makeText(this,"Empty location",Toast.LENGTH_SHORT).show();
             return false;
-        }else if (deadline.equals("")){
+        }else if (duration.equals("")) {
+            Toast.makeText(this, "Empty duration", Toast.LENGTH_SHORT);
+            return false;
+        } else if (deadline.equals("")){
             Toast.makeText(this,"Empty deadline",Toast.LENGTH_SHORT).show();
             return false;
         }else if (arrayDl.length != 3){

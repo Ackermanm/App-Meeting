@@ -6,6 +6,7 @@ import java.util.Map;
 public class Meeting {
     String title;
     String location;
+    String duration;
     String deadline;
     // Map string for date, object for poll.
     Map<String, Object> times;
@@ -18,9 +19,10 @@ public class Meeting {
 //    }
 
 
-    public Meeting(String title, String location, String deadline, Map<String, Object> times) {
+    public Meeting(String title, String location, String duration, String deadline, Map<String, Object> times) {
         this.title = title;
         this.location = location;
+        this.duration = duration;
         this.deadline = deadline;
         this.times = times;
     }
