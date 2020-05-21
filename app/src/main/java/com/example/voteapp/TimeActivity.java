@@ -13,6 +13,12 @@ import android.widget.CalendarView.OnDateChangeListener;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class TimeActivity extends AppCompatActivity {
@@ -36,7 +42,20 @@ public class TimeActivity extends AppCompatActivity {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 String date = (month + 1) + "-" + dayOfMonth + "-" + year;
-                startDate.setText(date);
+                Date now = Calendar.getInstance().getTime();
+                SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+                String nowString = sdf.format(now);
+                try {
+                    Date nowDate = sdf.parse(nowString);
+                    Date chosenDate = sdf.parse(date);
+                    if (chosenDate.compareTo(nowDate) >= 0){
+                        startDate.setText(date);
+                    }else {
+                        Toast.makeText(TimeActivity.this,"Meeting date must be after or equal today",Toast.LENGTH_SHORT).show();
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
