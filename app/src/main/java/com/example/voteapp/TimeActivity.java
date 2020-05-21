@@ -31,10 +31,10 @@ public class TimeActivity extends AppCompatActivity {
     Boolean reachLimit;
     Boolean existTime;
 
-    String timeString = "";
+    String clockString = "";
 
     public String getTimeString() {
-        return timeString;
+        return "";
     }
 
     @Override
@@ -49,6 +49,7 @@ public class TimeActivity extends AppCompatActivity {
         calendarView = findViewById(R.id.calendarTime);
         Arrays.fill(id, 0);
         Arrays.fill(times, "");
+
         /**
          * When change date, it will add a textView to show selected date and a delete button which can delete the textView.
          */
@@ -137,7 +138,8 @@ public class TimeActivity extends AppCompatActivity {
                     newFragment.show(getSupportFragmentManager(), "timePicker");
                 } else {
                     TextView textView = findViewById(R.id.startTime);
-                    textView.setText("");
+                    clockString = "";
+                    textView.setText(clockString);
                 }
             }
         });
@@ -147,9 +149,9 @@ public class TimeActivity extends AppCompatActivity {
      * The result of time picker when click ok
      */
     public void showTimePickerResult(int hour, int minute) {
-        String timeString = Integer.toString(hour) + ":" + Integer.toString(minute);
+        clockString = Integer.toString(hour) + ":" + Integer.toString(minute);
         TextView textView = findViewById(R.id.startTime);
-        textView.setText(timeString);
+        textView.setText(clockString);
     }
 
     /**
