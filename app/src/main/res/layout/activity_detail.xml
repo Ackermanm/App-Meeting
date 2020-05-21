@@ -26,30 +26,32 @@
         <TextView
             android:id="@+id/textLocation"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:text="TextView"
-            android:textSize="24sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/textDuration"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:text="TextView"
-            android:textSize="24sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/textDeadline"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginBottom="20dp"
             android:text="TextView"
-            android:textSize="24sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/textView8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Meeting ID:" />
+            android:layout_marginBottom="20dp"
+            android:text="Meeting ID:"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/textMeetingID"
@@ -58,7 +60,7 @@
             android:layout_marginBottom="40dp"
             android:text="TextView"
             android:textIsSelectable="true"
-            android:textSize="14sp" />
+            android:textSize="18sp" />
 
     </LinearLayout>
 
