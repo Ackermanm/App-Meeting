@@ -40,6 +40,7 @@ public class NewMeetingActivity extends AppCompatActivity {
         // Location
         locationText = findViewById(R.id.editNewLocation);
         durationText = findViewById(R.id.editMeetingDuration);
+        allTime = "";
     }
 
     /**
