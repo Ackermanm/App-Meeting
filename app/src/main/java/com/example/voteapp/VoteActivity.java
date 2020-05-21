@@ -21,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class VoteActivity extends AppCompatActivity {
@@ -85,11 +86,9 @@ public class VoteActivity extends AppCompatActivity {
         duration.setText(dura);
         String d = "Vote deadline: " + meeting.deadline;
         deadline.setText(d);
-//        Date now = Calendar.getInstance().getTime();
+        Date now = Calendar.getInstance().getTime();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         Date deadlineDate = sdf.parse(meeting.deadline);
-        String n = "20-05-2020";
-        Date now = sdf.parse(n);
         if (deadlineDate.compareTo(now) > 0) {
             // Set title and location for the meeting
             int i = 0; // index for radio button.
