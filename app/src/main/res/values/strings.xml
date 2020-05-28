@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">VoteApp</string>
+    <string name="app_name">Meeting Schedule</string>
     <string name="location_title">location</string>
     <string-array name="locations">
 
