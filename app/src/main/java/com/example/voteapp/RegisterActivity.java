@@ -129,6 +129,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
      * Method when press login button, check valid username and password.
      * If login success, deliver user id to main activity, then update UI according to its id.
      * */
+    private void loginannimantion(){
+        ImageView Star = (ImageView) findViewById(R.id.Mstar1);
+        ObjectAnimator animator = ObjectAnimator.ofFloat(Star, "translationX", 900f);
+        animator.setDuration(1000);
+        animator.reverse();
+        animator.setRepeatCount(Animation.INFINITE);
+        animator.start();
+    }
     private void Login() {
         String username = usernameedit.getText().toString();
         String password = userpasswordedit.getText().toString();
@@ -175,6 +183,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.ButtonLogin:
 //                System.out.println("yes");
+                loginannimantion();
                 Login();
                 /* startActivity(new Intent(this, MainActivity.class));*/
                 break;
