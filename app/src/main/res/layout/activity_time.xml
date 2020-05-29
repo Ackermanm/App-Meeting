@@ -60,29 +60,36 @@
 
     <TextView
         android:id="@+id/textStartTime"
-        android:layout_width="64dp"
-        android:layout_height="23dp"
+        android:layout_width="59dp"
+        android:layout_height="36dp"
         android:layout_marginEnd="8dp"
         android:text="Start At:"
+        android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@+id/startDate"
         app:layout_constraintEnd_toStartOf="@+id/startDate" />
 
     <TextView
         android:id="@+id/startDate"
-        android:layout_width="78dp"
-        android:layout_height="32dp"
-        android:layout_marginBottom="200dp"
+        android:layout_width="147dp"
+        android:layout_height="49dp"
         android:hint="dd-MM-yyyy"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/buttonCancelTime"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calendarTime" />
 
     <TextView
         android:id="@+id/startTime"
-        android:layout_width="66dp"
-        android:layout_height="32dp"
+        android:layout_width="81dp"
+        android:layout_height="46dp"
         android:layout_marginStart="16dp"
         android:hint="HH:mm"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@+id/startDate"
         app:layout_constraintStart_toEndOf="@+id/startDate" />
 
