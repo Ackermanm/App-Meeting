@@ -13,7 +13,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
+    /**
+     * The interface after create a new meeting, there will be the meeting id and back button.
+     * */
 public class DoneActivity extends AppCompatActivity {
     TextView textView;
     User user;
@@ -27,11 +29,13 @@ public class DoneActivity extends AppCompatActivity {
         textView.isSelected();
         Intent intent = getIntent();
         String userUid = intent.getStringExtra("User Uid");
+        // Following methods using firebase are adopted form firebase website.
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = firebaseDatabase.getReference(userUid);
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Create meeting id by concatenate user id and meeting index.
                 user = dataSnapshot.getValue(User.class);
                 int index = user.meetings.size() - 1;
                 String text = myRef.getKey() + "/" + index;
@@ -44,7 +48,9 @@ public class DoneActivity extends AppCompatActivity {
             }
         });
     }
-
+    /**
+     * Go directly back to main interface, jump the new meeting interface.
+     * */
     public void DoneClicked(View v) {
         finish();
     }

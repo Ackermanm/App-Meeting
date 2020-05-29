@@ -18,9 +18,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * New meeting interface, A user can fill information of a meeting
+ * */
 public class NewMeetingActivity extends AppCompatActivity {
-
+    // information that a meeting needs
     EditText titleText;
     EditText locationText; // spinner for location choice
     EditText durationText;
@@ -33,7 +35,7 @@ public class NewMeetingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_meeting);
-
+        // Get terms by their id.
         titleText = findViewById(R.id.editTextTitle);
         deadlineText = findViewById(R.id.editDeadline);
         returnTimeText = findViewById(R.id.textTimeResult); // Show selected date from calendar(Time Activity).

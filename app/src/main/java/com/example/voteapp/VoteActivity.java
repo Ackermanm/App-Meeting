@@ -23,7 +23,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
+/**
+ * Vote activity, user and nonuser can vote for scheduled times of a meeting.
+ * */
 public class VoteActivity extends AppCompatActivity {
     LinearLayout linearLayout;
     TextView title;
@@ -39,7 +41,7 @@ public class VoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vote);
-
+        // Find items by id.
         linearLayout = findViewById(R.id.linearForMeeting);
         title = findViewById(R.id.textTitle);
         location = findViewById(R.id.textLocation);
@@ -77,6 +79,7 @@ public class VoteActivity extends AppCompatActivity {
      * Update vote UI according to meeting details(title, location, times, radio buttons to choose time)
      */
     public void UpdateUI() throws ParseException {
+        // Set information of a meeting.
         Meeting meeting = user.meetings.get(Integer.parseInt(meetingIndex));
         String t = "Title: " + meeting.title;
         title.setText(t);
@@ -86,10 +89,11 @@ public class VoteActivity extends AppCompatActivity {
         duration.setText(dura);
         String d = "Vote deadline: " + meeting.deadline;
         deadline.setText(d);
+        // Check whether the meeting is after deadline, if it is, then only show the results of voting of the meeting.
         Date now = Calendar.getInstance().getTime();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         Date deadlineDate = sdf.parse(meeting.deadline);
-        if (deadlineDate.compareTo(now) > 0) {
+        if (deadlineDate.compareTo(now) > 0) { // If before deadline, update UI and customer can vote
             // Set title and location for the meeting
             int i = 0; // index for radio button.
             for (String key : meeting.times.keySet()) {
@@ -116,9 +120,10 @@ public class VoteActivity extends AppCompatActivity {
                 // Add new linear layout to vote page.
                 linearLayout.addView(ll);
             }
-        } else {
+        } else { // If after deadline, only show result of voting
             String result = "";
             int voteTime = 0;
+            // Check the highest voting time, and show it.
             for (String key : meeting.times.keySet()) {
                 Long l = (Long) meeting.times.get(key);
                 int time = l.intValue();

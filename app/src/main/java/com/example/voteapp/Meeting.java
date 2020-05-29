@@ -1,7 +1,9 @@
 package com.example.voteapp;
 
 import java.util.Map;
-
+/**
+ * Meeting class, includes all information that a meeting need
+ * */
 public class Meeting {
     String title;
     String location;

@@ -15,7 +15,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
+/**
+ * Meeting detail interface, show details of a meeting.
+ * */
 public class DetailActivity extends AppCompatActivity {
     LinearLayout linearLayout;
     TextView title;
@@ -28,8 +30,9 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-
+        // Linear layout for whole detail
         linearLayout = findViewById(R.id.linearForDetail);
+        // Title location duration deadline terms
         title = findViewById(R.id.textTitle);
         location = findViewById(R.id.textLocation);
         duration = findViewById(R.id.textDuration);
@@ -40,9 +43,11 @@ public class DetailActivity extends AppCompatActivity {
         // Show meeting id.
         meetingID.setText(meeting);
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        // Get user id and meeting index, because meetingid = user id + "/" + meeting index
         String[] info = meeting.split("/");
         final String userId = info[0];
         final String meetingIndex = info[1];
+        // Firebase methods using are learned from firebase website.
         DatabaseReference myRef = firebaseDatabase.getReference(userId).child("meetings").child(meetingIndex);
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -69,7 +74,7 @@ public class DetailActivity extends AppCompatActivity {
         duration.setText(dura);
         String dl = "Deadline: " + meeting.deadline;
         deadline.setText(dl);
-
+        // Update all the meeting times of a meeting
         for (String key : meeting.times.keySet()) {
             TextView textView = new TextView(this);
             String text = "Time: " + key + ", Vote: " + meeting.times.get(key);
@@ -80,7 +85,9 @@ public class DetailActivity extends AppCompatActivity {
             linearLayout.addView(textView);
         }
     }
-
+/**
+ * Go back to main interface.
+ * */
     public void BackClicked(View v) {
         finish();
     }

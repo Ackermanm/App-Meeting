@@ -27,7 +27,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Register interface, customer can sign up by using their email and login using email,
+ * user or non user can also vote for a meeting by filling meeting id.
+ * */
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseAuth mAuth;
@@ -49,8 +52,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         mAuth = FirebaseAuth.getInstance();
 
     }
+    /**
+     * Animation to make the app more interesting still being developed
+     * */
 
-    //Animation to make the app more interesting still being developed
     public void Mstar2(View view) {
         ImageView Star = (ImageView) findViewById(R.id.Mstar1);
         ObjectAnimator animator = ObjectAnimator.ofFloat(Star, "translationX", 900f);
@@ -59,7 +64,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         animator.setRepeatCount(Animation.INFINITE);
         animator.start();
     }
-
+    /**
+     * Every time start this activity, we empty texts that on it.
+     * This aims to user who go back this interface after they login.
+     * */
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
@@ -69,7 +77,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         userpasswordedit.setText("");
         meetingId.setText("");
     }
-
+    /**
+     * Register a new user, check valid username password.
+     * When pass all the rules and click register, add a new account in firebase.
+     * */
     public void register() {
         String username = usernameedit.getText().toString().trim();
         String password = userpasswordedit.getText().toString().trim();
@@ -114,8 +125,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         DatabaseReference myRef = firebaseDatabase.getReference(userUid);
         myRef.setValue(user);
     }
-
-    private void Login() { //method when press login button
+    /**
+     * Method when press login button, check valid username and password.
+     * If login success, deliver user id to main activity, then update UI according to its id.
+     * */
+    private void Login() {
         String username = usernameedit.getText().toString();
         String password = userpasswordedit.getText().toString();
 
@@ -140,6 +154,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 if (task.isSuccessful()) {//check the result with the server if successfully login do this
                     Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                     FirebaseUser user = mAuth.getCurrentUser();
+                    // Put user id to main activity
                     intent.putExtra("User Uid", user.getUid());
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//when press back button
                     startActivity(intent);
@@ -149,7 +164,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }
         });
     }
-
+    /**
+     * Switch onclick button according to their button id.
+     * */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -212,7 +229,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             Toast.makeText(this, "Wrong meeting ID format", Toast.LENGTH_SHORT).show();
         }
     }
-
+    /**
+     * Meeting id should include "/" which is a basic rule.
+     * */
     public Boolean EligibleMeetingId(String meetingID) {
         if (!meetingID.contains("/")) {
             return false;

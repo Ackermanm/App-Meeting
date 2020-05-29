@@ -1,7 +1,9 @@
 package com.example.voteapp;
 
 import java.util.List;
-
+/**
+ * User class, includes all information of a user.
+ * */
 public class User {
     String email;
     List<Meeting> meetings;

@@ -20,7 +20,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
-
+/**
+ * Main activity includes a user's all meeting information
+ * */
 public class MainActivity extends AppCompatActivity {
 
     LinearLayout linearLayout;
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+        // Write update UI in on start method, because after adding a new meeting and go back to main, we need to show the meeting.
         linearLayout.removeAllViews();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         myRef = database.getReference(userUid);
@@ -53,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(User.class);
+                // Check a user whether has meetings or not, if does not have meeting, then will read null from firebase.
                 if (user.meetings != null) {
                     UpdateUI(user);
                 }
@@ -163,12 +167,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+/**
+ * Update information of a use in firebase
+ * */
     public void UpdateDatabase(int index) {
         List<Meeting> meeting = user.meetings;
         meeting.set(index, null);
     }
-
+/**
+ * Update user's information when this interface pause, so that we do not need update information every time delete a meeting.
+ * */
     @Override
     public void onPause() {
         super.onPause();
