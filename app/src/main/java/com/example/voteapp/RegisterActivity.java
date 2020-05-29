@@ -178,6 +178,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             String[] texts = text.split("/");
             String ref = texts[0];
             final String index = texts[1];
+            /**
+             * The following firebase read data method is adopted firebase website.
+             * All the firebase methods in this project are adopted from firebase website
+             * Source: https://firebase.google.com/docs/database/android/start?authuser=0
+             * */
             FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
             DatabaseReference myRef = firebaseDatabase.getReference(ref);
             myRef.addListenerForSingleValueEvent(new ValueEventListener() {
