@@ -177,15 +177,21 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         if (EligibleMeetingId(text)) {
             String[] texts = text.split("/");
             String ref = texts[0];
+            final String index = texts[1];
             FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
             DatabaseReference myRef = firebaseDatabase.getReference(ref);
             myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
-//                        Log.d("Exist data: ","Yes!");
-                        intent.putExtra("Meeting ID", text);
-                        startActivity(intent);
+                    User o = dataSnapshot.getValue(User.class);
+                    if (o!=null && o.meetings!=null) {
+                        if (Integer.parseInt(index) < o.meetings.size()){
+                            //                        Log.d("Exist data: ","Yes!");
+                            intent.putExtra("Meeting ID", text);
+                            startActivity(intent);
+                        }else{
+                            Toast.makeText(RegisterActivity.this, "Incorrect meeting ID", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
 //                        Log.d("Exist data: ","No!");
                         Toast.makeText(RegisterActivity.this, "Incorrect meeting ID", Toast.LENGTH_SHORT).show();
