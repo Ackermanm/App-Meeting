@@ -1,7 +1,3 @@
-/**
- * This fragment is learned from Android Developer Website.
- * https://developer.android.com/guide/topics/ui/controls/pickers
- */
 package com.example.voteapp;
 
 import android.app.Dialog;
@@ -17,6 +13,10 @@ import java.util.Calendar;
 
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
 
+    /**
+     * This is learned from Android Developer Website.
+     * https://developer.android.com/guide/topics/ui/controls/pickers
+     */
     @Override
     public Dialog onCreateDialog(Bundle saveInstanceState) {
         // Use the current time as the default value for the picker
