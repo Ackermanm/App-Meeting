@@ -1,3 +1,7 @@
+/**
+ * This fragment is learned from Android Developer Website.
+ * https://developer.android.com/guide/topics/ui/controls/pickers
+ */
 package com.example.voteapp;
 
 import android.app.Dialog;
