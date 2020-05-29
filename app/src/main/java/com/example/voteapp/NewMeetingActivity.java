@@ -76,23 +76,25 @@ public class NewMeetingActivity extends AppCompatActivity {
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 String time = data.getStringExtra("time"); // times: selected dates.
-                allTime += time + "/";
-                /**
-                 * Following two lines are adapted from online code
-                 * Source: https://android--examples.blogspot.com/2015/01/textview-new-line-multiline-in-android.html
-                 */
-                if (returnTimeText.getText().toString().equals("")) {
-                    returnTimeText.setText(time);
-                } else {
-                    returnTimeText.append(System.getProperty("line.separator"));
-                    returnTimeText.append(time);
+                if (time!=null){
+                    allTime += time + "/";
+                    /**
+                     * Following two lines are adapted from online code
+                     * Source: https://android--examples.blogspot.com/2015/01/textview-new-line-multiline-in-android.html
+                     */
+                    if (returnTimeText.getText().toString().equals("")) {
+                        returnTimeText.setText(time);
+                    } else {
+                        returnTimeText.append(System.getProperty("line.separator"));
+                        returnTimeText.append(time);
+                    }
                 }
             }
         }
     }
 
     /**
-     * Click done button, deliver details of meeting to finish page(Done activiy).
+     * Click done button, deliver details of meeting to finish page(Done activity).
      *
      * @param v Done Button
      */
