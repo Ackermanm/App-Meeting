@@ -38,6 +38,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     EditText userpasswordedit;
     String userUid;
     EditText meetingId;
+    ObjectAnimator animator;
+    ImageView Star;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,29 +52,23 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         meetingId = findViewById(R.id.editMeetingID);
 
         mAuth = FirebaseAuth.getInstance();
+        Star = (ImageView) findViewById(R.id.Mstar1);
+        animator = ObjectAnimator.ofFloat(Star, "translationX", 900f);
 
     }
-    /**
-     * Animation to make the app more interesting still being developed
-     * */
 
-    public void Mstar2(View view) {
-        ImageView Star = (ImageView) findViewById(R.id.Mstar1);
-        ObjectAnimator animator = ObjectAnimator.ofFloat(Star, "translationX", 900f);
-        animator.setDuration(100);
-        animator.reverse();
-        animator.setRepeatCount(Animation.INFINITE);
-        animator.start();
-    }
     /**
      * Every time start this activity, we empty texts that on it.
      * This aims to user who go back this interface after they login.
      * */
     public void onStart() {
         super.onStart();
+        animator.cancel();
+        Star.setX(20f);
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         // Every time create or start this activity, clear text in username, password and meeting id.
+
         usernameedit.setText("");
         userpasswordedit.setText("");
         meetingId.setText("");
@@ -130,29 +126,35 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
      * If login success, deliver user id to main activity, then update UI according to its id.
      * */
     private void loginannimantion(){
-        ImageView Star = (ImageView) findViewById(R.id.Mstar1);
-        ObjectAnimator animator = ObjectAnimator.ofFloat(Star, "translationX", 900f);
+
         animator.setDuration(1000);
         animator.reverse();
         animator.setRepeatCount(Animation.INFINITE);
         animator.start();
     }
     private void Login() {
+
         String username = usernameedit.getText().toString();
         String password = userpasswordedit.getText().toString();
 
         if (username.equals("")) {
             usernameedit.setError("Please Enter Email");
+            Star.setX(20f);
+            animator.cancel();
             return;
         }
         if (password.equals("")) {
             userpasswordedit.setError("Please Enter password");
+            Star.setX(20f);
+            animator.cancel();
             return;
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(username).matches()) {
             usernameedit.setError("Please enter a vaid email");
             usernameedit.requestFocus();
+            Star.setX(20f);
+            animator.cancel();
             return;
         }
         mAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -167,6 +169,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//when press back button
                     startActivity(intent);
                 } else {
+                    Star.setX(20f);
+                    animator.cancel();
                     Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -183,6 +187,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.ButtonLogin:
 //                System.out.println("yes");
+                animator.cancel();
                 loginannimantion();
                 Login();
                 /* startActivity(new Intent(this, MainActivity.class));*/
